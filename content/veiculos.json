@@ -1,13 +1,28 @@
 {
   "veiculos": [
     {
-      "slug": "renault-kwid-1-0",
       "marca": "Renault",
       "modelo": "Kwid",
       "versao": "1.0",
       "categoria": "Compacto",
-      "carroceria": "suv",
-      "cor_ilustracao": "#C8372D",
+      "preco_diaria": null,
+      "destaque_home": true,
+      "imagens": [
+        {
+          "src": "img/frota/kwid-vermelho.webp",
+          "alt": "Renault Kwid vermelho com placa da Loca Fácil",
+          "foco": "50% 72%",
+          "h": 492,
+          "w": 400
+        },
+        {
+          "src": "img/frota/kwid-laranja.webp",
+          "alt": "Renault Kwid laranja estacionado",
+          "foco": "50% 72%",
+          "h": 523,
+          "w": 410
+        }
+      ],
       "passageiros": 5,
       "cambio": "manual",
       "ar_condicionado": "confirmar",
@@ -19,33 +34,18 @@
         "Ideal para a cidade"
       ],
       "resumo": "Compacto, alto e fácil de manobrar: uma escolha prática para circular entre as praias e o centro de Garopaba gastando pouco.",
-      "preco_diaria": "",
-      "imagens": [
-        {
-          "src": "img/frota/kwid-vermelho.webp",
-          "alt": "Renault Kwid vermelho com placa da Loca Fácil",
-          "w": 400,
-          "h": 492,
-          "foco": "50% 72%"
-        },
-        {
-          "src": "img/frota/kwid-laranja.webp",
-          "alt": "Renault Kwid laranja estacionado",
-          "w": 410,
-          "h": 523,
-          "foco": "50% 72%"
-        }
-      ],
-      "destaque_home": true
+      "slug": "renault-kwid-1-0",
+      "carroceria": "suv",
+      "cor_ilustracao": "#C8372D"
     },
     {
-      "slug": "renault-logan-1-0",
       "marca": "Renault",
       "modelo": "Logan",
       "versao": "1.0",
       "categoria": "Sedã",
-      "carroceria": "sedan",
-      "cor_ilustracao": "#7B4B2E",
+      "preco_diaria": null,
+      "destaque_home": false,
+      "imagens": [],
       "passageiros": 5,
       "cambio": "manual",
       "ar_condicionado": "confirmar",
@@ -57,18 +57,26 @@
         "Porta-malas grande"
       ],
       "resumo": "Sedã com o maior porta-malas da frota. Indicado para famílias, viagens com bastante bagagem ou quem vem do aeroporto com malas grandes.",
-      "preco_diaria": "",
-      "imagens": [],
-      "destaque_home": false
+      "slug": "renault-logan-1-0",
+      "carroceria": "sedan",
+      "cor_ilustracao": "#7B4B2E"
     },
     {
-      "slug": "hyundai-hb20-1-0",
       "marca": "Hyundai",
       "modelo": "HB20",
       "versao": "1.0",
       "categoria": "Hatch",
-      "carroceria": "hatch",
-      "cor_ilustracao": "#B8BEC5",
+      "preco_diaria": null,
+      "destaque_home": true,
+      "imagens": [
+        {
+          "src": "img/frota/hb20-branco.webp",
+          "alt": "Hyundai HB20 branco com placa da Loca Fácil",
+          "foco": "50% 72%",
+          "h": 546,
+          "w": 399
+        }
+      ],
       "passageiros": 5,
       "cambio": "manual",
       "ar_condicionado": "confirmar",
@@ -80,26 +88,26 @@
         "Tecnologia"
       ],
       "resumo": "Hatch moderno com som Bluetooth para conectar o celular. Equilíbrio entre conforto, tecnologia e economia no dia a dia.",
-      "preco_diaria": "",
-      "imagens": [
-        {
-          "src": "img/frota/hb20-branco.webp",
-          "alt": "Hyundai HB20 branco com placa da Loca Fácil",
-          "w": 399,
-          "h": 546,
-          "foco": "50% 72%"
-        }
-      ],
-      "destaque_home": true
+      "slug": "hyundai-hb20-1-0",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#B8BEC5"
     },
     {
-      "slug": "fiat-mobi-1-0",
       "marca": "Fiat",
       "modelo": "Mobi",
       "versao": "Like 1.0",
       "categoria": "Compacto",
-      "carroceria": "hatch",
-      "cor_ilustracao": "#2B2F33",
+      "preco_diaria": null,
+      "destaque_home": true,
+      "imagens": [
+        {
+          "src": "img/frota/mobi-loja.webp",
+          "alt": "Fiat Mobi preto estacionado em frente à loja",
+          "foco": "50% 82%",
+          "h": 538,
+          "w": 437
+        }
+      ],
       "passageiros": 5,
       "cambio": "manual",
       "ar_condicionado": "confirmar",
@@ -111,26 +119,18 @@
         "Fácil de dirigir"
       ],
       "resumo": "O mais compacto da frota: estaciona em qualquer vaga da beira-mar e é muito fácil de dirigir. Ótimo para casais e trajetos curtos.",
-      "preco_diaria": "",
-      "imagens": [
-        {
-          "src": "img/frota/mobi-loja.webp",
-          "alt": "Fiat Mobi preto estacionado em frente à loja",
-          "w": 437,
-          "h": 538,
-          "foco": "50% 82%"
-        }
-      ],
-      "destaque_home": true
+      "slug": "fiat-mobi-1-0",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#2B2F33"
     },
     {
-      "slug": "fiat-argo",
       "marca": "Fiat",
       "modelo": "Argo",
       "versao": "",
       "categoria": "Hatch",
-      "carroceria": "hatch",
-      "cor_ilustracao": "#EEEEEA",
+      "preco_diaria": null,
+      "destaque_home": false,
+      "imagens": [],
       "passageiros": 5,
       "cambio": "confirmar",
       "ar_condicionado": "sim",
@@ -140,9 +140,34 @@
         "Completo"
       ],
       "resumo": "Hatch completo, divulgado pela locadora como disponível para locação. Confortável para passeios mais longos pelo litoral.",
-      "preco_diaria": "",
-      "imagens": [],
-      "destaque_home": false
+      "slug": "fiat-argo",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#EEEEEA"
+    },
+    {
+      "marca": "Audi",
+      "modelo": "r6",
+      "versao": "automatica",
+      "categoria": "Sedã",
+      "preco_diaria": 500,
+      "destaque_home": false,
+      "imagens": [
+        {
+          "src": "/img/frota/audi 6.webp",
+          "alt": "",
+          "foco": "50% 72%"
+        }
+      ],
+      "passageiros": 5,
+      "cambio": "automatico",
+      "ar_condicionado": "sim",
+      "porta_malas_litros": 350,
+      "combustivel": "Flex",
+      "destaques_empresa": [],
+      "resumo": "",
+      "slug": "",
+      "carroceria": "hatch",
+      "cor_ilustracao": ""
     }
   ]
 }
