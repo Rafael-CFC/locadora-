@@ -616,10 +616,7 @@ def page_hero(eyebrow, title, lead, crumbs=None):
 # --------------------------------------------------------------------------- pages
 
 def vehicle_options(selected=None, include_help=True):
-    opts = ['<option value="">Selecione um veículo</option>'] if not include_help else [
-        '<option value="economico">Tanto faz – o mais econômico disponível</option>',
-        '<option value="">Ainda não sei – quero orientação</option>',
-    ]
+    opts = ['<option value="">Selecione um veículo</option>'] if not include_help else ['<option value="">Ainda não sei – quero orientação</option>']
     for v in FLEET:
         sel = " selected" if v["slug"] == selected else ""
         opts.append(f'<option value="{v["slug"]}"{sel}>{e(vehicle_name(v))} · {e(v["categoria"])}</option>')
@@ -820,11 +817,6 @@ def build_catalog():
         <button class="btn btn--quiet btn--sm" type="button" data-filter-reset hidden>Limpar filtros</button>
       </div>
     </form>
-    <a class="economy-banner reveal" href="/reserva/?veiculo=economico" data-track="cta_click" data-track-label="catalogo_economico">
-      <span class="economy-banner__icon">{icon('key')}</span>
-      <span class="economy-banner__text"><strong>Tanto faz o modelo?</strong> Informe só as datas e receba o carro mais em conta disponível no período.</span>
-      <span class="economy-banner__cta">Pedir o mais econômico{icon('arrow')}</span>
-    </a>
     <div class="vehicle-grid vehicle-grid--catalog" data-vehicle-grid>{cards}</div>
     <div class="empty-state" data-empty hidden>
       <h2>Nenhum veículo com essa combinação</h2>
@@ -1017,15 +1009,7 @@ def build_reserva():
 
       <fieldset class="wizard__panel" data-step="1">
         <legend class="wizard__legend">Qual veículo você procura?</legend>
-        <p class="wizard__hint">Escolha um modelo, ou deixe com a gente: indicamos o carro mais em conta livre nas suas datas.</p>
-        <label class="choice-card choice-card--economy">
-          <input type="radio" name="veiculo" value="economico" data-label="O mais econômico disponível">
-          <span class="choice-card__art choice-card__art--icon">{icon('key')}</span>
-          <span class="choice-card__text"><strong>Tanto faz o modelo: quero o mais econômico</strong><span>Informe só as datas. A equipe indica o carro mais em conta disponível no período.</span></span>
-          <span class="choice-card__badge">Mais acessível</span>
-          <span class="choice-card__check">{icon('check')}</span>
-        </label>
-        <p class="choice-divider"><span>ou escolha o modelo</span></p>
+        <p class="wizard__hint">Não tem certeza? Escolha “Quero orientação” e a equipe indica o carro ideal.</p>
         <div class="choice-grid">
           {cards}
           <label class="choice-card choice-card--help">

@@ -378,7 +378,7 @@
     ['veiculo', 'retirada', 'devolucao', 'retirada_hora', 'devolucao_hora'].forEach((k) => { if (url.get(k)) initial[k] = url.get(k); });
     if (initial.retirada && initial.retirada < todayISO()) delete initial.retirada;
     if (initial.devolucao && initial.devolucao < todayISO()) delete initial.devolucao;
-    if (initial.veiculo && !bySlug[initial.veiculo] && !['orientacao', 'economico'].includes(initial.veiculo)) delete initial.veiculo;
+    if (initial.veiculo && !bySlug[initial.veiculo] && initial.veiculo !== 'orientacao') delete initial.veiculo;
     Object.entries(initial).forEach(([k, v]) => {
       const f = el[k];
       if (!f || v == null) return;
@@ -432,10 +432,7 @@
     };
 
     // Mensagem em blocos curtos: fácil de ler no WhatsApp e de responder pela equipe.
-    const vehicleLine = (d) => ({
-      economico: 'Qualquer modelo: *o mais econômico disponível* nas minhas datas',
-      orientacao: 'Ainda não escolhi, gostaria de uma indicação',
-    }[d.veiculo] || `*${vehicleLabel(d)}*`);
+    const vehicleLine = (d) => (d.veiculo === 'orientacao' ? 'Ainda não escolhi, gostaria de uma indicação' : `*${vehicleLabel(d)}*`);
     const buildMessage = (d) => {
       const lines = [
         'Olá, Loca Fácil! 👋',
