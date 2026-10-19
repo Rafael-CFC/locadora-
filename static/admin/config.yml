@@ -19,6 +19,12 @@ site_url: https://rafael-cfc.github.io/locadora-/
 display_url: https://rafael-cfc.github.io/locadora-/
 logo_url: ../favicon.svg
 
+# Nomes de arquivo e endereços sem acentos nem espaços (ex.: "audi 6.jpg" vira "audi-6.webp").
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
 # Fotos enviadas pelo painel: convertidas para WebP e reduzidas no próprio navegador.
 media_folder: static/img/frota
 public_folder: /img/frota

@@ -335,7 +335,7 @@ def photo_tag(img, eager=False, alt=None, extra=""):
     loading = 'fetchpriority="high"' if eager else 'loading="lazy"'
     alt_text = img.get("alt", "") if alt is None else alt
     return (
-        f'<img src="/{e(img["src"])}" alt="{e(alt_text)}" width="{img.get("w", 800)}" height="{img.get("h", 600)}" '
+        f'<img src="/{e(quote(img["src"]))}" alt="{e(alt_text)}" width="{img.get("w", 800)}" height="{img.get("h", 600)}" '
         f'style="object-position:{e(img.get("foco", "50% 50%"))}" {loading} decoding="async"{extra}>'
     )
 
@@ -1007,13 +1007,13 @@ def build_vehicle(v):
         if len(imgs) > 1:
             cur = ' aria-current="true"'
             thumbs = '<div class="gallery__thumbs">' + "".join(
-                f'<button type="button" class="gallery__thumb" data-gallery-thumb="/{e(img["src"])}" data-alt="{e(img.get("alt", ""))}" '
+                f'<button type="button" class="gallery__thumb" data-gallery-thumb="/{e(quote(img["src"]))}" data-alt="{e(img.get("alt", ""))}" '
                 f'data-foco="{e(img.get("foco", "50% 50%"))}" aria-label="Ver foto {i + 1} de {len(imgs)}"{cur if i == 0 else ""}>'
                 f'{photo_tag(img, alt="")}</button>'
                 for i, img in enumerate(imgs)
             ) + "</div>"
         gallery = (
-            f'<div class="gallery gallery--photo"><div class="gallery__main" style="--img:url(/{e(first["src"])})">{main}</div>{thumbs}</div>'
+            f'<div class="gallery gallery--photo"><div class="gallery__main" style="--img:url(&quot;/{e(quote(first["src"]))}&quot;)">{main}</div>{thumbs}</div>'
         )
     else:
         gallery = (
@@ -1432,6 +1432,7 @@ def with_base(html_text):
     if not BASE_PATH:
         return html_text
     html_text = re.sub(r'((?:href|src|action|data-gallery-thumb)=")/(?!/)', lambda m: m.group(1) + BASE_PATH + "/", html_text)
+    html_text = re.sub(r"url\(&quot;/(?!/)", f"url(&quot;{BASE_PATH}/", html_text)
     return re.sub(r"url\(/(?!/)", f"url({BASE_PATH}/", html_text)
 
 

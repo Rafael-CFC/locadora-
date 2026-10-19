@@ -356,7 +356,7 @@
         galleryMain.src = thumb.dataset.galleryThumb;
         galleryMain.alt = thumb.dataset.alt || '';
         galleryMain.style.objectPosition = thumb.dataset.foco || '';
-        galleryMain.parentElement.style.setProperty('--img', `url(${thumb.dataset.galleryThumb})`);
+        galleryMain.parentElement.style.setProperty('--img', `url("${thumb.dataset.galleryThumb}")`);
         galleryMain.classList.remove('is-swapping');
       };
       if (reduceMotion) { swap(); return; }
