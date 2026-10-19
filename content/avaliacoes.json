@@ -1,0 +1,31 @@
+{
+  "_leia": "Regras: so aparecem no site avaliacoes com verificada=true E autorizada=true E exemplo=false. 'verificada' = conferida na fonte original. 'autorizada' = o cliente autorizou o uso, ou a avaliacao e publica na fonte e exibimos o nome abreviado. 'data' (AAAA-MM-DD) so quando a data exata for conhecida; o Google mostra datas relativas ('3 meses atras'), registradas em 'data_aproximada' apenas para controle interno. 'url' = link direto da avaliacao ou do perfil no Google.",
+  "avaliacoes": [
+    {
+      "nome": "Thallis F.",
+      "cidade": null,
+      "nota": 5,
+      "texto": "Ótimo atendimento, sem burocracias e muito acessível!! Recomendo. 💛✅",
+      "data": null,
+      "data_aproximada": "cerca de 3 meses antes de 19/10/2026",
+      "fonte": "Google",
+      "url": null,
+      "verificada": true,
+      "autorizada": true,
+      "exemplo": false
+    },
+    {
+      "nome": "Eduardo A.",
+      "cidade": null,
+      "nota": 5,
+      "texto": "Recomendo, excelente atendimento e atenção com os clientes.",
+      "data": null,
+      "data_aproximada": "cerca de 6 meses antes de 19/10/2026",
+      "fonte": "Google",
+      "url": null,
+      "verificada": true,
+      "autorizada": true,
+      "exemplo": false
+    }
+  ]
+}

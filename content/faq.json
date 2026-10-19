@@ -1,0 +1,107 @@
+{
+  "_leia": "resposta null = pergunta pendente: some do site publicado e aparece marcada no modo --dev. 'destaque': true leva a pergunta para a pagina inicial.",
+  "perguntas": [
+    {
+      "categoria": "Reserva",
+      "pergunta": "Como faço para reservar um carro?",
+      "resposta": "Escolha um veículo (ou peça orientação), informe as datas de retirada e devolução e envie a solicitação pelo WhatsApp com os dados já preenchidos. A equipe confere a disponibilidade, informa o valor e as condições e, só então, confirma a reserva.",
+      "destaque": true
+    },
+    {
+      "categoria": "Reserva",
+      "pergunta": "A solicitação enviada pelo site já garante o carro?",
+      "resposta": "Ainda não. A solicitação é o primeiro contato: a reserva só está confirmada quando a equipe da Loca Fácil responder confirmando veículo, período e valor.",
+      "destaque": true
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "Quanto custa a diária?",
+      "resposta": "As diárias começam em R$ {diaria}. O valor final depende do veículo escolhido e do período da locação. Envie suas datas e receba a cotação exata.",
+      "destaque": true
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "O seguro está incluso?",
+      "resposta": "Sim. As locações incluem seguro total. Os detalhes da cobertura constam no contrato de locação; se quiser, a equipe explica cada ponto antes da retirada.",
+      "destaque": true
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "Vocês alugam por mês?",
+      "resposta": "Sim. Trabalhamos com aluguel por diária e também mensal. Para períodos longos, peça uma cotação informando as datas desejadas.",
+      "destaque": false
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "Atendem empresas?",
+      "resposta": "Sim. Atendemos pessoas físicas e empresas. Ao solicitar, indique que a locação é para empresa e a equipe orienta sobre o cadastro.",
+      "destaque": false
+    },
+    {
+      "categoria": "Retirada e devolução",
+      "pergunta": "Onde retiro o carro?",
+      "resposta": "Nossa loja física fica na Rodovia Abílio Manoel de Lima, 2720, Sala 01, em Areias de Palhocinha, Garopaba. Se precisar retirar em outro local, informe na solicitação para a equipe avaliar.",
+      "destaque": true
+    },
+    {
+      "categoria": "Documentos e requisitos",
+      "pergunta": "Quais documentos são necessários para alugar?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Documentos e requisitos",
+      "pergunta": "Existe idade mínima para o condutor?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Documentos e requisitos",
+      "pergunta": "É necessário ter cartão de crédito?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "Como funciona a caução?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "O que está incluído no preço além do seguro?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Retirada e devolução",
+      "pergunta": "Vocês entregam o carro no aeroporto ou em outra cidade?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Retirada e devolução",
+      "pergunta": "Como funciona a devolução? Preciso devolver com o tanque cheio?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Reserva",
+      "pergunta": "Como funciona o cancelamento?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Reserva",
+      "pergunta": "Posso estender o período de locação?",
+      "resposta": null,
+      "destaque": false
+    },
+    {
+      "categoria": "Valores",
+      "pergunta": "Existe limite de quilometragem?",
+      "resposta": null,
+      "destaque": false
+    }
+  ]
+}

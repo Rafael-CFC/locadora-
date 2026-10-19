@@ -1,0 +1,52 @@
+{
+  "_leia": "Fonte de verdade dos dados comerciais. Campos null nao sao exibidos no site publicado (aparecem como PENDENTE no modo --dev).",
+  "nome": "Garopaba Loca Fácil Veículos",
+  "nome_curto": "Loca Fácil",
+  "slogan": "Mobilidade para curtir o litoral",
+  "site_url": null,
+  "whatsapp": "5548998163119",
+  "telefone": "(48) 99816-3119",
+  "telefone_e164": "+5548998163119",
+  "email": null,
+  "instagram": "garopaba_locafacil",
+  "google_perfil_url": null,
+  "google_avaliacoes_url": null,
+  "endereco": {
+    "logradouro": "Rodovia Abílio Manoel de Lima, 2720, Sala 01",
+    "bairro": "Areias de Palhocinha",
+    "cidade": "Garopaba",
+    "uf": "SC",
+    "cep": "88495-000"
+  },
+  "horarios": null,
+  "diaria_a_partir": 180,
+  "_diaria_obs": "O Instagram/pesquisa cita R$ 160 e o texto da empresa cita R$ 180. Confirmar o valor vigente.",
+  "modalidades": ["Diária", "Mensal"],
+  "publico": ["Pessoa física", "Empresas"],
+  "area_atendida": "Garopaba e região",
+  "diferenciais": [
+    "Veículos revisados e vistoriados",
+    "Seguro total incluso",
+    "Cadastro rápido e sem burocracia",
+    "Contrato transparente e sem surpresas",
+    "Loja física para melhor atendimento",
+    "Aluguel por diária ou mensal, para pessoas e empresas"
+  ],
+  "sobre": [
+    "Na Garopaba Loca Fácil, oferecemos soluções práticas, rápidas e seguras para quem precisa de um carro em Garopaba e região.",
+    "Trabalhamos com veículos revisados, econômicos e com seguro total, garantindo conforto e tranquilidade para sua viagem ou dia a dia. Seja para turismo, trabalho ou imprevistos, temos o carro ideal para você.",
+    "Nosso compromisso é oferecer mobilidade com segurança, preço justo e atendimento de qualidade."
+  ],
+  "historia": null,
+  "politicas": {
+    "idade_minima": null,
+    "documentos": null,
+    "cartao_credito": null,
+    "caucao": null,
+    "cancelamento": null,
+    "quilometragem": null,
+    "combustivel": null,
+    "entrega_outro_local": null,
+    "entrega_aeroporto": null
+  }
+}

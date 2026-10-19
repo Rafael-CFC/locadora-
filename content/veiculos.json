@@ -1,0 +1,149 @@
+{
+  "_leia": "Frota divulgada pela empresa. Campos null = a confirmar; nao sao exibidos como fato. 'porta_malas_litros' vem da ficha tecnica de fabrica. 'imagens': lista de {src, alt, w, h, foco}; 'foco' = object-position (onde o carro esta na foto, ex.: '50% 70%'). Fotos em static/img/frota/ (WebP). Sem fotos, o site usa uma ilustracao neutra.",
+  "veiculos": [
+    {
+      "slug": "renault-kwid-1-0",
+      "marca": "Renault",
+      "modelo": "Kwid",
+      "versao": "1.0",
+      "categoria": "Compacto",
+      "carroceria": "suv",
+      "cor_ilustracao": "#C8372D",
+      "passageiros": 5,
+      "cambio": "manual",
+      "ar_condicionado": null,
+      "porta_malas_litros": 290,
+      "combustivel": "Flex",
+      "destaques_empresa": [
+        "Câmbio manual",
+        "Econômico",
+        "Ideal para a cidade"
+      ],
+      "resumo": "Compacto, alto e fácil de manobrar: uma escolha prática para circular entre as praias e o centro de Garopaba gastando pouco.",
+      "preco_diaria": null,
+      "imagens": [
+        {
+          "src": "img/frota/kwid-vermelho.webp",
+          "alt": "Renault Kwid vermelho com placa da Loca Fácil",
+          "w": 400,
+          "h": 492,
+          "foco": "50% 72%"
+        },
+        {
+          "src": "img/frota/kwid-laranja.webp",
+          "alt": "Renault Kwid laranja estacionado",
+          "w": 410,
+          "h": 523,
+          "foco": "50% 74%"
+        }
+      ],
+      "destaque_home": true
+    },
+    {
+      "slug": "renault-logan-1-0",
+      "marca": "Renault",
+      "modelo": "Logan",
+      "versao": "1.0",
+      "categoria": "Sedã",
+      "carroceria": "sedan",
+      "cor_ilustracao": "#7B4B2E",
+      "passageiros": 5,
+      "cambio": "manual",
+      "ar_condicionado": null,
+      "porta_malas_litros": 510,
+      "combustivel": "Flex",
+      "destaques_empresa": [
+        "Espaçoso",
+        "Conforto",
+        "Porta-malas grande"
+      ],
+      "resumo": "Sedã com o maior porta-malas da frota. Indicado para famílias, viagens com bastante bagagem ou quem vem do aeroporto com malas grandes.",
+      "preco_diaria": null,
+      "imagens": [],
+      "destaque_home": false
+    },
+    {
+      "slug": "hyundai-hb20-1-0",
+      "marca": "Hyundai",
+      "modelo": "HB20",
+      "versao": "1.0",
+      "categoria": "Hatch",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#B8BEC5",
+      "passageiros": 5,
+      "cambio": "manual",
+      "ar_condicionado": null,
+      "porta_malas_litros": 300,
+      "combustivel": "Flex",
+      "destaques_empresa": [
+        "Câmbio manual",
+        "Som Bluetooth",
+        "Tecnologia"
+      ],
+      "resumo": "Hatch moderno com som Bluetooth para conectar o celular. Equilíbrio entre conforto, tecnologia e economia no dia a dia.",
+      "preco_diaria": null,
+      "imagens": [
+        {
+          "src": "img/frota/hb20-branco.webp",
+          "alt": "Hyundai HB20 branco com placa da Loca Fácil",
+          "w": 399,
+          "h": 546,
+          "foco": "50% 70%"
+        }
+      ],
+      "destaque_home": true
+    },
+    {
+      "slug": "fiat-mobi-1-0",
+      "marca": "Fiat",
+      "modelo": "Mobi",
+      "versao": "Like 1.0",
+      "categoria": "Compacto",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#2B2F33",
+      "passageiros": 5,
+      "cambio": "manual",
+      "ar_condicionado": null,
+      "porta_malas_litros": 215,
+      "combustivel": "Flex",
+      "destaques_empresa": [
+        "Econômico",
+        "Compacto",
+        "Fácil de dirigir"
+      ],
+      "resumo": "O mais compacto da frota: estaciona em qualquer vaga da beira-mar e é muito fácil de dirigir. Ótimo para casais e trajetos curtos.",
+      "preco_diaria": null,
+      "imagens": [
+        {
+          "src": "img/frota/mobi-loja.webp",
+          "alt": "Fiat Mobi preto estacionado em frente à loja",
+          "w": 437,
+          "h": 538,
+          "foco": "50% 82%"
+        }
+      ],
+      "destaque_home": true
+    },
+    {
+      "slug": "fiat-argo",
+      "marca": "Fiat",
+      "modelo": "Argo",
+      "versao": null,
+      "categoria": "Hatch",
+      "carroceria": "hatch",
+      "cor_ilustracao": "#EEEEEA",
+      "passageiros": 5,
+      "cambio": null,
+      "ar_condicionado": true,
+      "porta_malas_litros": 300,
+      "combustivel": "Flex",
+      "destaques_empresa": [
+        "Completo"
+      ],
+      "resumo": "Hatch completo, divulgado pela locadora como disponível para locação. Confortável para passeios mais longos pelo litoral.",
+      "preco_diaria": null,
+      "imagens": [],
+      "destaque_home": false
+    }
+  ]
+}
