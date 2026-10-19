@@ -143,31 +143,6 @@
       "slug": "fiat-argo",
       "carroceria": "hatch",
       "cor_ilustracao": "#EEEEEA"
-    },
-    {
-      "marca": "Audi",
-      "modelo": "r6",
-      "versao": "automatica",
-      "categoria": "Sedã",
-      "preco_diaria": 500,
-      "destaque_home": false,
-      "imagens": [
-        {
-          "src": "/img/frota/audi 6.webp",
-          "alt": "",
-          "foco": "50% 72%"
-        }
-      ],
-      "passageiros": 5,
-      "cambio": "automatico",
-      "ar_condicionado": "sim",
-      "porta_malas_litros": 350,
-      "combustivel": "Flex",
-      "destaques_empresa": [],
-      "resumo": "",
-      "slug": "",
-      "carroceria": "hatch",
-      "cor_ilustracao": ""
     }
   ]
 }
