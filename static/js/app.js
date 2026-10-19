@@ -87,6 +87,14 @@
     }
   };
 
+  /* ------------------------------------------------------------ avisos com período */
+  // O build já remove avisos vencidos; aqui o período vale também entre uma publicação e outra.
+  $$('[data-aviso]').forEach((el) => {
+    const hoje = todayISO();
+    const { inicio, fim } = el.dataset;
+    el.hidden = Boolean((inicio && inicio > hoje) || (fim && fim < hoje));
+  });
+
   /* ------------------------------------------------------------ header e navegação */
   const header = $('[data-header]');
   if (header) {
@@ -261,7 +269,7 @@
             ${row('Categoria', (v) => v.categoria)}
             ${row('Passageiros', (v) => v.passageiros)}
             ${row('Câmbio', (v) => cambioLabel[v.cambio] || 'Consulte')}
-            ${row('Ar-condicionado', (v) => (v.ar ? 'Sim' : 'Consulte'))}
+            ${row('Ar-condicionado', (v) => (v.ar ? 'Sim' : v.ar === false ? 'Não' : 'Consulte'))}
             ${row('Porta-malas', (v) => (v.litros ? `<span class="${v.litros === maxL ? 'is-best' : ''}">${bagLabel[v.bagagem]} · ${v.litros} L</span>` : 'Consulte'))}
             ${row('Combustível', (v) => v.combustivel || 'Consulte')}
             ${row('Diária', (v) => (v.preco ? `R$ ${v.preco}` : 'Sob consulta'))}

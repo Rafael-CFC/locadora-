@@ -937,3 +937,10 @@ h2 { font-size: clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem); letter-spacing: -.02em; 
   font-size: clamp(3.5rem, 1rem + 13vw, 13rem); line-height: .85; letter-spacing: -.045em; color: var(--c-sun);
 }
 .site-footer__bottom { border-top: 0; margin-top: var(--sp-6); }
+
+/* Faixa de avisos/promoções (editada pelo painel) */
+.aviso { background: var(--c-sun); color: var(--c-ink); }
+.aviso__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .25rem 1rem; padding-block: .6rem; text-align: center; }
+.aviso p { margin: 0; font-weight: 600; font-size: var(--fs-sm); }
+.aviso a { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; font-size: var(--fs-sm); color: var(--c-ink); }
+.aviso a .icon { width: 1em; height: 1em; }

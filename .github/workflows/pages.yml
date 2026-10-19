@@ -5,6 +5,9 @@ name: Publicar site
 on:
   push:
     branches: [main]
+  # Republica todo dia às 6h (Brasília) para avisos com data de início/fim entrarem e saírem sozinhos.
+  schedule:
+    - cron: "0 9 * * *"
   workflow_dispatch:
 
 permissions:

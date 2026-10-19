@@ -1,0 +1,267 @@
+# Painel de edição do site (Sveltia CMS).
+# Cada "Publicar" grava no repositório do GitHub e o site é republicado sozinho em ~1 minuto.
+
+backend:
+  name: github
+  repo: Rafael-CFC/locadora-
+  branch: main
+  # Login com botão "Entrar com GitHub": publique o Sveltia CMS Authenticator na Cloudflare
+  # e informe aqui o endereço dele (veja o README). Sem isso, o login é feito com token.
+  # base_url: https://sveltia-cms-auth.SEU-USUARIO.workers.dev
+  commit_messages:
+    create: "Painel: cria {{collection}} “{{slug}}”"
+    update: "Painel: atualiza {{collection}} “{{slug}}”"
+    delete: "Painel: remove {{collection}} “{{slug}}”"
+    uploadMedia: "Painel: envia foto “{{path}}”"
+    deleteMedia: "Painel: remove foto “{{path}}”"
+
+site_url: https://rafael-cfc.github.io/locadora-/
+display_url: https://rafael-cfc.github.io/locadora-/
+logo_url: ../favicon.svg
+
+# Fotos enviadas pelo painel: convertidas para WebP e reduzidas no próprio navegador.
+media_folder: static/img/frota
+public_folder: /img/frota
+media_libraries:
+  default:
+    config:
+      max_file_size: 20000000
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+collections:
+  # ------------------------------------------------------------------ Frota
+  - name: frota
+    label: Carros
+    description: Carros do site, com preço, fotos e características. Arraste para mudar a ordem.
+    files:
+      - name: veiculos
+        label: Frota de veículos
+        file: content/veiculos.json
+        format: json
+        fields:
+          - name: veiculos
+            label: Carros
+            label_singular: carro
+            widget: list
+            summary: "{{fields.marca}} {{fields.modelo}} {{fields.versao}}"
+            fields:
+              - { name: marca, label: Marca, widget: string, hint: "Ex.: Renault" }
+              - { name: modelo, label: Modelo, widget: string, hint: "Ex.: Kwid" }
+              - { name: versao, label: Versão, widget: string, required: false, hint: "Ex.: 1.0 ou Like 1.0" }
+              - name: categoria
+                label: Categoria
+                widget: select
+                options: [Compacto, Hatch, Sedã, SUV, Picape, Utilitário]
+              - name: preco_diaria
+                label: Preço da diária (R$)
+                widget: number
+                value_type: int
+                min: 0
+                required: false
+                hint: Só números, sem centavos. Deixe vazio para mostrar “valor sob consulta”.
+              - name: destaque_home
+                label: Mostrar na página inicial
+                widget: boolean
+                default: false
+                hint: A página inicial mostra até 3 carros marcados.
+              - name: imagens
+                label: Fotos
+                label_singular: foto
+                widget: list
+                required: false
+                summary: "{{fields.alt}}"
+                hint: A primeira foto aparece nos cards. Fotos em pé ou deitadas funcionam; o carro deve estar inteiro na imagem.
+                fields:
+                  - { name: src, label: Foto, widget: image }
+                  - { name: alt, label: Descrição da foto, widget: string, required: false, hint: "Para quem usa leitor de tela. Ex.: Renault Kwid vermelho em frente à loja" }
+                  - name: foco
+                    label: Onde o carro está na foto
+                    widget: select
+                    default: "50% 72%"
+                    hint: Ajuda a recortar a foto sem cortar o carro nos cards.
+                    options:
+                      - { label: Um pouco abaixo do centro (mais comum), value: "50% 72%" }
+                      - { label: Na parte de baixo, value: "50% 82%" }
+                      - { label: No centro, value: "50% 50%" }
+                      - { label: Na parte de cima, value: "50% 30%" }
+              - { name: passageiros, label: Passageiros, widget: number, value_type: int, default: 5, min: 1 }
+              - name: cambio
+                label: Câmbio
+                widget: select
+                default: confirmar
+                options:
+                  - { label: Manual, value: manual }
+                  - { label: Automático, value: automatico }
+                  - { label: A confirmar, value: confirmar }
+              - name: ar_condicionado
+                label: Ar-condicionado
+                widget: select
+                default: confirmar
+                options:
+                  - { label: Sim, value: sim }
+                  - { label: Não, value: nao }
+                  - { label: A confirmar, value: confirmar }
+              - { name: porta_malas_litros, label: Porta-malas (litros), widget: number, value_type: int, required: false, hint: "Da ficha técnica do modelo. Usado no filtro de bagagem." }
+              - name: combustivel
+                label: Combustível
+                widget: select
+                default: Flex
+                options: [Flex, Gasolina, Etanol, Diesel, Híbrido, Elétrico]
+              - name: destaques_empresa
+                label: Destaques (etiquetas)
+                label_singular: destaque
+                widget: list
+                required: false
+                field: { name: texto, label: Destaque, widget: string }
+                hint: "Curtos. Ex.: Econômico, Som Bluetooth, Porta-malas grande"
+              - { name: resumo, label: Descrição curta, widget: text, required: false, hint: "Uma ou duas frases sobre para quem o carro é indicado." }
+              - name: slug
+                label: Endereço da página (avançado)
+                widget: string
+                required: false
+                hint: Deixe vazio em carros novos (é criado sozinho). Não altere depois de publicado, para não quebrar links.
+              - name: carroceria
+                label: Desenho usado quando não há foto (avançado)
+                widget: select
+                default: hatch
+                options:
+                  - { label: Hatch, value: hatch }
+                  - { label: Sedã, value: sedan }
+                  - { label: SUV / aventureiro, value: suv }
+              - { name: cor_ilustracao, label: Cor do desenho (avançado), widget: string, required: false, hint: "Código de cor, ex.: #C8372D" }
+
+  # ------------------------------------------------------------------ Avisos
+  - name: avisos
+    label: Avisos e promoções
+    description: Faixa amarela no topo de todas as páginas. Use para feriados, promoções e horários especiais.
+    files:
+      - name: avisos
+        label: Avisos
+        file: content/avisos.json
+        format: json
+        fields:
+          - name: avisos
+            label: Avisos
+            label_singular: aviso
+            widget: list
+            summary: "{{fields.texto}}"
+            fields:
+              - { name: ativo, label: Ativo, widget: boolean, default: true }
+              - { name: texto, label: Texto, widget: string, hint: "Curto, uma frase. Ex.: Feriado de outubro: reserve com antecedência." }
+              - { name: link_texto, label: Texto do link, widget: string, required: false, hint: "Ex.: Ver carros" }
+              - { name: link_url, label: Endereço do link, widget: string, required: false, hint: "Ex.: /veiculos/ ou https://wa.me/5548998163119" }
+              - { name: inicio, label: Mostrar a partir de, widget: datetime, required: false, format: YYYY-MM-DD, time_format: false, date_format: DD/MM/YYYY }
+              - { name: fim, label: Mostrar até, widget: datetime, required: false, format: YYYY-MM-DD, time_format: false, date_format: DD/MM/YYYY }
+
+  # ------------------------------------------------------------------ Avaliações
+  - name: avaliacoes
+    label: Avaliações de clientes
+    description: Só aparecem no site as avaliações marcadas como verificadas e autorizadas.
+    files:
+      - name: avaliacoes
+        label: Avaliações
+        file: content/avaliacoes.json
+        format: json
+        fields:
+          - name: avaliacoes
+            label: Avaliações
+            label_singular: avaliação
+            widget: list
+            summary: "{{fields.nome}} · {{fields.nota}} estrelas"
+            fields:
+              - { name: nome, label: Nome exibido, widget: string, hint: "Primeiro nome e inicial do sobrenome. Ex.: Thallis F." }
+              - { name: cidade, label: Cidade, widget: string, required: false }
+              - { name: nota, label: Nota (1 a 5), widget: number, value_type: int, min: 1, max: 5, default: 5 }
+              - { name: texto, label: Comentário, widget: text, hint: "Copie o texto exatamente como o cliente escreveu." }
+              - { name: data, label: Data, widget: datetime, required: false, format: YYYY-MM-DD, time_format: false, date_format: DD/MM/YYYY, hint: "Deixe vazio se não souber a data exata." }
+              - name: fonte
+                label: Onde foi publicada
+                widget: select
+                default: Google
+                options: [Google, Instagram, Facebook, WhatsApp]
+              - { name: url, label: Link da avaliação, widget: string, required: false }
+              - { name: verificada, label: Conferi que a avaliação existe na fonte, widget: boolean, default: false }
+              - { name: autorizada, label: Posso publicar (cliente autorizou ou é pública na fonte), widget: boolean, default: false }
+              - { name: exemplo, label: É só um exemplo de layout, widget: boolean, default: false }
+              - { name: data_aproximada, label: Anotação interna de data, widget: string, required: false }
+
+  # ------------------------------------------------------------------ Perguntas
+  - name: perguntas
+    label: Perguntas frequentes
+    description: Perguntas sem resposta ficam escondidas no site até você responder.
+    files:
+      - name: faq
+        label: Perguntas frequentes
+        file: content/faq.json
+        format: json
+        fields:
+          - name: perguntas
+            label: Perguntas
+            label_singular: pergunta
+            widget: list
+            summary: "{{fields.pergunta}}"
+            fields:
+              - name: categoria
+                label: Grupo
+                widget: select
+                options: [Reserva, Valores, Retirada e devolução, Documentos e requisitos]
+              - { name: pergunta, label: Pergunta, widget: string }
+              - { name: resposta, label: Resposta, widget: text, required: false }
+              - { name: destaque, label: Mostrar na página inicial, widget: boolean, default: false }
+
+  # ------------------------------------------------------------------ Empresa
+  - name: empresa
+    label: Dados da empresa
+    description: Contato, endereço, horário, diária mínima e textos da página Sobre.
+    files:
+      - name: empresa
+        label: Dados da empresa
+        file: content/empresa.json
+        format: json
+        fields:
+          - { name: nome, label: Nome da empresa, widget: string }
+          - { name: diaria_a_partir, label: "Diária a partir de (R$)", widget: number, value_type: int, min: 0, hint: "Aparece no selo verde do topo do site." }
+          - { name: whatsapp, label: WhatsApp (com 55 e DDD, só números), widget: string, hint: "Ex.: 5548998163119. Recebe todas as solicitações do site." }
+          - { name: telefone, label: Telefone exibido, widget: string, hint: "Ex.: (48) 99816-3119" }
+          - { name: email, label: E-mail, widget: string, required: false }
+          - { name: instagram, label: Instagram (sem @), widget: string, required: false }
+          - { name: horarios, label: Horário de atendimento, widget: string, required: false, hint: "Ex.: Seg. a sáb., 8h às 18h" }
+          - name: endereco
+            label: Endereço
+            widget: object
+            fields:
+              - { name: logradouro, label: Rua, número e sala, widget: string }
+              - { name: bairro, label: Bairro, widget: string }
+              - { name: cidade, label: Cidade, widget: string }
+              - { name: uf, label: Estado (UF), widget: string }
+              - { name: cep, label: CEP, widget: string }
+          - { name: area_atendida, label: Área atendida, widget: string }
+          - { name: google_perfil_url, label: Link do perfil no Google, widget: string, required: false }
+          - { name: google_avaliacoes_url, label: Link para avaliar no Google, widget: string, required: false }
+          - { name: sobre, label: Texto da página Sobre, widget: text, hint: "Separe os parágrafos com uma linha em branco." }
+          - { name: historia, label: História da empresa, widget: text, required: false, hint: "Opcional. Separe os parágrafos com uma linha em branco." }
+          - name: diferenciais
+            label: Diferenciais (página Sobre)
+            label_singular: diferencial
+            widget: list
+            field: { name: texto, label: Diferencial, widget: string }
+          - name: politicas
+            label: Condições de locação
+            widget: object
+            hint: Aparecem na página de cada carro quando preenchidas.
+            fields:
+              - { name: quilometragem, label: Quilometragem, widget: string, required: false }
+              - { name: caucao, label: Caução, widget: string, required: false }
+              - { name: combustivel, label: Combustível na devolução, widget: string, required: false }
+              - { name: idade_minima, label: Idade mínima, widget: string, required: false }
+              - { name: documentos, label: Documentos, widget: string, required: false }
+              - { name: cartao_credito, label: Cartão de crédito, widget: string, required: false }
+              - { name: cancelamento, label: Cancelamento, widget: string, required: false }
+              - { name: entrega_outro_local, label: Entrega em outro local, widget: string, required: false }
+              - { name: entrega_aeroporto, label: Entrega no aeroporto, widget: string, required: false }
+          - { name: site_url, label: Endereço oficial do site (avançado), widget: string, required: false, hint: "Preencha quando tiver o domínio próprio." }

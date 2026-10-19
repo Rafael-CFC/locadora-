@@ -1,5 +1,4 @@
 {
-  "_leia": "Frota divulgada pela empresa. Campos null = a confirmar; nao sao exibidos como fato. 'porta_malas_litros' vem da ficha tecnica de fabrica. 'imagens': lista de {src, alt, w, h, foco}; 'foco' = object-position (onde o carro esta na foto, ex.: '50% 70%'). Fotos em static/img/frota/ (WebP). Sem fotos, o site usa uma ilustracao neutra.",
   "veiculos": [
     {
       "slug": "renault-kwid-1-0",
@@ -11,7 +10,7 @@
       "cor_ilustracao": "#C8372D",
       "passageiros": 5,
       "cambio": "manual",
-      "ar_condicionado": null,
+      "ar_condicionado": "confirmar",
       "porta_malas_litros": 290,
       "combustivel": "Flex",
       "destaques_empresa": [
@@ -20,7 +19,7 @@
         "Ideal para a cidade"
       ],
       "resumo": "Compacto, alto e fácil de manobrar: uma escolha prática para circular entre as praias e o centro de Garopaba gastando pouco.",
-      "preco_diaria": null,
+      "preco_diaria": "",
       "imagens": [
         {
           "src": "img/frota/kwid-vermelho.webp",
@@ -34,7 +33,7 @@
           "alt": "Renault Kwid laranja estacionado",
           "w": 410,
           "h": 523,
-          "foco": "50% 74%"
+          "foco": "50% 72%"
         }
       ],
       "destaque_home": true
@@ -49,7 +48,7 @@
       "cor_ilustracao": "#7B4B2E",
       "passageiros": 5,
       "cambio": "manual",
-      "ar_condicionado": null,
+      "ar_condicionado": "confirmar",
       "porta_malas_litros": 510,
       "combustivel": "Flex",
       "destaques_empresa": [
@@ -58,7 +57,7 @@
         "Porta-malas grande"
       ],
       "resumo": "Sedã com o maior porta-malas da frota. Indicado para famílias, viagens com bastante bagagem ou quem vem do aeroporto com malas grandes.",
-      "preco_diaria": null,
+      "preco_diaria": "",
       "imagens": [],
       "destaque_home": false
     },
@@ -72,7 +71,7 @@
       "cor_ilustracao": "#B8BEC5",
       "passageiros": 5,
       "cambio": "manual",
-      "ar_condicionado": null,
+      "ar_condicionado": "confirmar",
       "porta_malas_litros": 300,
       "combustivel": "Flex",
       "destaques_empresa": [
@@ -81,14 +80,14 @@
         "Tecnologia"
       ],
       "resumo": "Hatch moderno com som Bluetooth para conectar o celular. Equilíbrio entre conforto, tecnologia e economia no dia a dia.",
-      "preco_diaria": null,
+      "preco_diaria": "",
       "imagens": [
         {
           "src": "img/frota/hb20-branco.webp",
           "alt": "Hyundai HB20 branco com placa da Loca Fácil",
           "w": 399,
           "h": 546,
-          "foco": "50% 70%"
+          "foco": "50% 72%"
         }
       ],
       "destaque_home": true
@@ -103,7 +102,7 @@
       "cor_ilustracao": "#2B2F33",
       "passageiros": 5,
       "cambio": "manual",
-      "ar_condicionado": null,
+      "ar_condicionado": "confirmar",
       "porta_malas_litros": 215,
       "combustivel": "Flex",
       "destaques_empresa": [
@@ -112,7 +111,7 @@
         "Fácil de dirigir"
       ],
       "resumo": "O mais compacto da frota: estaciona em qualquer vaga da beira-mar e é muito fácil de dirigir. Ótimo para casais e trajetos curtos.",
-      "preco_diaria": null,
+      "preco_diaria": "",
       "imagens": [
         {
           "src": "img/frota/mobi-loja.webp",
@@ -128,20 +127,20 @@
       "slug": "fiat-argo",
       "marca": "Fiat",
       "modelo": "Argo",
-      "versao": null,
+      "versao": "",
       "categoria": "Hatch",
       "carroceria": "hatch",
       "cor_ilustracao": "#EEEEEA",
       "passageiros": 5,
-      "cambio": null,
-      "ar_condicionado": true,
+      "cambio": "confirmar",
+      "ar_condicionado": "sim",
       "porta_malas_litros": 300,
       "combustivel": "Flex",
       "destaques_empresa": [
         "Completo"
       ],
       "resumo": "Hatch completo, divulgado pela locadora como disponível para locação. Confortável para passeios mais longos pelo litoral.",
-      "preco_diaria": null,
+      "preco_diaria": "",
       "imagens": [],
       "destaque_home": false
     }

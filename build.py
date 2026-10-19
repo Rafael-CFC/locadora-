@@ -34,10 +34,133 @@ def load(name):
         return json.load(f)
 
 
-EMP = load("empresa.json")
-FLEET = load("veiculos.json")["veiculos"]
-FAQ = load("faq.json")["perguntas"]
-REVIEWS_ALL = load("avaliacoes.json")["avaliacoes"]
+WARNINGS = []
+
+
+def load_optional(name, key):
+    try:
+        return load(name).get(key) or []
+    except FileNotFoundError:
+        return []
+
+
+# --------------------------------------------------------------------------- normalização
+# O painel (/admin) grava strings vazias, "confirmar", textos com várias linhas etc.
+# Aqui tudo vira o formato que o site espera, para nenhum campo em branco quebrar o build.
+
+def blank(value):
+    return value is None or (isinstance(value, str) and not value.strip())
+
+
+def paragraphs(value):
+    """Lista de parágrafos a partir de uma lista ou de um texto separado por linhas em branco."""
+    if blank(value):
+        return None
+    if isinstance(value, list):
+        items = [p.strip() for p in value if not blank(p)]
+    else:
+        items = [p.strip().replace("\n", " ") for p in str(value).split("\n\n") if p.strip()]
+    return items or None
+
+
+def slugify(text):
+    import unicodedata
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", text).strip("-")
+
+
+def image_size(path):
+    """Largura e altura lidas do cabeçalho do arquivo (WebP, PNG ou JPEG), sem bibliotecas."""
+    try:
+        data = path.read_bytes()
+    except OSError:
+        return None
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        kind = data[12:16]
+        if kind == b"VP8X":
+            return 1 + int.from_bytes(data[24:27], "little"), 1 + int.from_bytes(data[27:30], "little")
+        if kind == b"VP8 ":
+            return int.from_bytes(data[26:28], "little") & 0x3FFF, int.from_bytes(data[28:30], "little") & 0x3FFF
+        if kind == b"VP8L":
+            b = int.from_bytes(data[21:25], "little")
+            return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    if data[:2] == b"\xff\xd8":
+        i = 2
+        while i < len(data) - 9:
+            if data[i] != 0xFF:
+                i += 1
+                continue
+            marker = data[i + 1]
+            if marker in (0xC0, 0xC1, 0xC2):
+                return int.from_bytes(data[i + 7:i + 9], "big"), int.from_bytes(data[i + 5:i + 7], "big")
+            i += 2 + int.from_bytes(data[i + 2:i + 4], "big")
+    return None
+
+
+def normalize_vehicle(v):
+    v = dict(v)
+    for key in ("versao", "resumo", "combustivel", "carroceria", "cor_ilustracao"):
+        if blank(v.get(key)):
+            v[key] = None
+    v["cambio"] = v.get("cambio") if v.get("cambio") in ("manual", "automatico") else None
+    ar = v.get("ar_condicionado")
+    v["ar_condicionado"] = True if ar in (True, "sim") else False if ar in (False, "nao") else None
+    for key in ("preco_diaria", "porta_malas_litros", "passageiros"):
+        val = v.get(key)
+        v[key] = None if blank(val) else int(float(val))
+    v["passageiros"] = v["passageiros"] or 5
+    v["destaques_empresa"] = [t for t in (v.get("destaques_empresa") or []) if not blank(t)]
+    v["resumo"] = v["resumo"] or ""
+    v["carroceria"] = v["carroceria"] or "hatch"
+    v["destaque_home"] = bool(v.get("destaque_home"))
+    if blank(v.get("slug")):
+        v["slug"] = slugify(" ".join(x for x in [v.get("marca"), v.get("modelo"), v.get("versao")] if x))
+    imgs = []
+    for img in v.get("imagens") or []:
+        if isinstance(img, str):
+            img = {"src": img}
+        if blank(img.get("src")):
+            continue
+        img = dict(img)
+        img["src"] = img["src"].lstrip("/")
+        if blank(img.get("alt")):
+            img["alt"] = f"{v.get('marca', '')} {v.get('modelo', '')}".strip()
+        if blank(img.get("foco")):
+            img["foco"] = "50% 72%"
+        if not img.get("w") or not img.get("h"):
+            size = image_size(STATIC / img["src"])
+            if size:
+                img["w"], img["h"] = size
+            else:
+                WARNINGS.append(f"Foto não encontrada: {img['src']}")
+                continue
+        imgs.append(img)
+    v["imagens"] = imgs
+    return v
+
+
+def normalize_company(c):
+    c = dict(c)
+    c["whatsapp"] = re.sub(r"\D", "", str(c.get("whatsapp", "")))
+    c["telefone_e164"] = "+" + c["whatsapp"]
+    for key in ("email", "horarios", "google_perfil_url", "google_avaliacoes_url", "site_url"):
+        if blank(c.get(key)):
+            c[key] = None
+    c["sobre"] = paragraphs(c.get("sobre")) or []
+    c["historia"] = paragraphs(c.get("historia"))
+    c["diferenciais"] = [d for d in (c.get("diferenciais") or []) if not blank(d)]
+    c["politicas"] = {k: (None if blank(val) else val) for k, val in (c.get("politicas") or {}).items()}
+    c["area_atendida"] = c.get("area_atendida") or "Garopaba e região"
+    return c
+
+
+EMP = normalize_company(load("empresa.json"))
+FLEET = [normalize_vehicle(v) for v in load("veiculos.json")["veiculos"]]
+FAQ = [{**q, "resposta": None if blank(q.get("resposta")) else q["resposta"]} for q in load("faq.json")["perguntas"]]
+REVIEWS_ALL = [{**r, "data": None if blank(r.get("data")) else r["data"]} for r in load("avaliacoes.json")["avaliacoes"]]
+AVISOS = [a for a in load_optional("avisos.json", "avisos") if a.get("ativo") and not blank(a.get("texto"))]
 
 SITE_URL = (os.environ.get("SITE_URL") or EMP.get("site_url") or "http://localhost:8000").rstrip("/")
 GSC_TOKEN = os.environ.get("GOOGLE_SITE_VERIFICATION", "")
@@ -45,7 +168,6 @@ GSC_TOKEN = os.environ.get("GOOGLE_SITE_VERIFICATION", "")
 BASE_PATH = "/" + os.environ.get("BASE_PATH", "").strip("/") if os.environ.get("BASE_PATH", "").strip("/") else ""
 
 e = html.escape
-WARNINGS = []
 
 
 # --------------------------------------------------------------------------- helpers
@@ -279,6 +401,25 @@ def breadcrumb_jsonld(items):
     }
 
 
+def avisos_band():
+    hoje = datetime.date.today().isoformat()
+    itens = []
+    for a in AVISOS:
+        fim, inicio = a.get("fim") or "", a.get("inicio") or ""
+        if fim and fim < hoje:
+            continue  # já expirou na data do build
+        link = ""
+        if not blank(a.get("link_url")):
+            externo = a["link_url"].startswith("http")
+            alvo = ' target="_blank" rel="noopener"' if externo else ""
+            link = f'<a href="{e(a["link_url"])}"{alvo}>{e(a.get("link_texto") or "Saiba mais")}{icon("arrow")}</a>'
+        itens.append(
+            f'<div class="aviso" data-aviso data-inicio="{e(inicio)}" data-fim="{e(fim)}"{" hidden" if inicio and inicio > hoje else ""}>'
+            f'<div class="container aviso__inner"><p>{e(a["texto"])}</p>{link}</div></div>'
+        )
+    return "".join(itens)
+
+
 def header(active):
     cur = ' aria-current="page"'
     links = "".join(
@@ -411,6 +552,7 @@ def page(path, title, description, body, active=None, jsonld=None, page_class=""
 <body class="{page_class}">
 {dev_bar}
 {header(active)}
+{avisos_band()}
 <main id="conteudo" tabindex="-1">
 {body}
 </main>
@@ -429,7 +571,7 @@ def spec_list(v, compact=False):
     items = [
         ("users", f"{v['passageiros']} passageiros"),
         ("gear", {"manual": "Câmbio manual", "automatico": "Câmbio automático"}.get(v["cambio"]) or pending("câmbio", "Câmbio a confirmar")),
-        ("snow", "Ar-condicionado" if v["ar_condicionado"] else pending("ar-condicionado", "Ar-condicionado: consulte")),
+        ("snow", "Ar-condicionado" if v["ar_condicionado"] else "Sem ar-condicionado" if v["ar_condicionado"] is False else pending("ar-condicionado", "Ar-condicionado: consulte")),
         ("bag", f"Porta-malas {LUGGAGE_LABEL[luggage_class(v)].lower()} · {v['porta_malas_litros']} L" if v.get("porta_malas_litros") else pending("porta-malas", "Porta-malas: consulte")),
     ]
     if not compact:
@@ -895,7 +1037,7 @@ def build_vehicle(v):
         ("Versão", v["versao"] or None), ("Categoria", v["categoria"]),
         ("Passageiros", str(v["passageiros"])),
         ("Câmbio", {"manual": "Manual", "automatico": "Automático"}.get(v["cambio"])),
-        ("Ar-condicionado", "Sim" if v["ar_condicionado"] else None),
+        ("Ar-condicionado", "Sim" if v["ar_condicionado"] else "Não" if v["ar_condicionado"] is False else None),
         ("Porta-malas", f"{v['porta_malas_litros']} litros (ficha de fábrica)" if v.get("porta_malas_litros") else None),
         ("Combustível", v.get("combustivel")),
     ]

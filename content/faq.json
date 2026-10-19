@@ -1,5 +1,4 @@
 {
-  "_leia": "resposta null = pergunta pendente: some do site publicado e aparece marcada no modo --dev. 'destaque': true leva a pergunta para a pagina inicial.",
   "perguntas": [
     {
       "categoria": "Reserva",
@@ -46,61 +45,61 @@
     {
       "categoria": "Documentos e requisitos",
       "pergunta": "Quais documentos são necessários para alugar?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Documentos e requisitos",
       "pergunta": "Existe idade mínima para o condutor?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Documentos e requisitos",
       "pergunta": "É necessário ter cartão de crédito?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Valores",
       "pergunta": "Como funciona a caução?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Valores",
       "pergunta": "O que está incluído no preço além do seguro?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Retirada e devolução",
       "pergunta": "Vocês entregam o carro no aeroporto ou em outra cidade?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Retirada e devolução",
       "pergunta": "Como funciona a devolução? Preciso devolver com o tanque cheio?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Reserva",
       "pergunta": "Como funciona o cancelamento?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Reserva",
       "pergunta": "Posso estender o período de locação?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     },
     {
       "categoria": "Valores",
       "pergunta": "Existe limite de quilometragem?",
-      "resposta": null,
+      "resposta": "",
       "destaque": false
     }
   ]

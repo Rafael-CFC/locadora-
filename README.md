@@ -33,10 +33,12 @@ Em hospedagem compartilhada sem build: rode `SITE_URL=... python build.py` no co
 ```
 build.py               gerador: templates, SEO, JSON-LD, sitemap, robots
 content/
-  empresa.json         dados da empresa (fonte de verdade); null = não exibido
+  empresa.json         dados da empresa (fonte de verdade); campo vazio = não exibido
   veiculos.json        frota e especificações
-  faq.json             perguntas frequentes; resposta null = oculta em produção
+  faq.json             perguntas frequentes; resposta vazia = oculta em produção
   avaliacoes.json      avaliações; só publica verificadas + autorizadas
+  avisos.json          faixa de avisos e promoções
+static/admin/          painel de edição (Sveltia CMS)
 static/
   css/styles.css       design system (tokens de cor, tipografia, componentes)
   js/app.js            filtros, comparação, fluxo de reserva, WhatsApp, mapa
@@ -47,6 +49,9 @@ dist/                  saída gerada (não editar à mão)
 Páginas: `/`, `/veiculos/`, `/veiculos/<modelo>/`, `/reserva/`, `/sobre/`, `/avaliacoes/`, `/perguntas-frequentes/`, `/contato/`, `/privacidade/`.
 
 ## Como atualizar o conteúdo
+
+O jeito normal é pelo painel `/admin/` (veja abaixo). Editando os arquivos à mão:
+
 
 - **Preços**: `preco_diaria` em `veiculos.json` (número, ex.: `189`). Sem valor, o site mostra “a partir de” + “sob consulta”.
 - **Fotos reais**: salve em `static/img/frota/` em WebP e liste em `imagens` como `{"src": "img/frota/kwid-vermelho.webp", "alt": "…", "w": 400, "h": 492, "foco": "50% 72%"}`. `foco` indica onde o carro está na foto (usado no recorte dos cards). Com 2 ou mais fotos, a galeria ganha miniaturas.
@@ -73,9 +78,19 @@ Antes de escolher a 2 ou a 3, confira os termos, custos e cotas vigentes na docu
 
 Os cliques importantes já geram eventos em `window.dataLayer`: `whatsapp_click`, `cta_click`, `vehicle_select`, `form_start`, `reserva_etapa`, `reserva_enviada`, `filter_change`, `compare_open`. Para medir, instale o Google Tag Manager com um banner de consentimento (LGPD) e crie as tags a partir desses eventos. Sem ferramenta instalada, nada é enviado.
 
-## Painel administrativo (segunda etapa)
+## Painel de edição (/admin)
 
-Como todo o conteúdo está em JSON, o caminho mais simples é um CMS baseado em Git (ex.: Decap CMS): a equipe edita veículos, preços, fotos, perguntas e avaliações em um painel com login, o que gera um commit, e a hospedagem refaz o build automaticamente. Para **guardar as solicitações recebidas** ou controlar disponibilidade da frota seria necessário um backend (banco de dados, autenticação, política de retenção dos dados). Isso só vale a pena com um sistema confiável de controle de frota.
+O cliente edita o conteúdo em `/admin/` com o **Sveltia CMS** (carregado de unpkg.com, sem servidor e sem banco de dados). O guia para o cliente está em [GUIA-DO-PAINEL.md](GUIA-DO-PAINEL.md).
+
+- **Configuração:** `static/admin/config.yml` (coleções: Carros, Avisos e promoções, Avaliações, Perguntas frequentes, Dados da empresa). Cada campo tem rótulo e dica em português.
+- **Como publica:** cada “Salvar” vira um commit na `main` e o workflow republica o site.
+- **Fotos:** enviadas para `static/img/frota/`, convertidas para WebP e limitadas a 1600 px no próprio navegador. O build lê largura e altura do arquivo, então o cliente não precisa informar.
+- **Tolerância a campos vazios:** `build.py` normaliza o que o painel grava (`""`, `"confirmar"`, textos com parágrafos, endereço da página vazio = gerado a partir de marca, modelo e versão).
+- **Avisos:** `content/avisos.json`; aparecem numa faixa no topo de todas as páginas. O workflow roda todo dia às 6h (Brasília) para avisos com data entrarem e saírem sozinhos, e o navegador também confere o período.
+- **Login:**
+  - **Token (padrão, já funciona):** o cliente precisa de uma conta no GitHub com acesso ao repositório (Settings → Collaborators → Add people) e cria um token de acesso com *Contents: Read and write* só para este repositório.
+  - **Botão “Entrar com GitHub” (opcional):** crie um OAuth App no GitHub, publique o *Sveltia CMS Authenticator* na Cloudflare Workers (gratuito) e preencha `backend.base_url` no `config.yml`. Sem isso, o botão “Entrar com GitHub” não funciona; use o token.
+- **Quando um banco de dados passaria a fazer sentido:** guardar as solicitações recebidas, calendário de disponibilidade da frota, vários usuários com permissões diferentes ou relatórios.
 
 ## Testes realizados
 
