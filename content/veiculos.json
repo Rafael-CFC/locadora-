@@ -99,27 +99,6 @@
       "slug": "fiat-mobi-1-0",
       "carroceria": "hatch",
       "cor_ilustracao": "#2B2F33"
-    },
-    {
-      "marca": "Fiat",
-      "modelo": "Argo",
-      "versao": "",
-      "categoria": "Hatch",
-      "preco_diaria": null,
-      "destaque_home": false,
-      "imagens": [],
-      "passageiros": 5,
-      "cambio": "confirmar",
-      "ar_condicionado": "sim",
-      "porta_malas_litros": 300,
-      "combustivel": "Flex",
-      "destaques_empresa": [
-        "Completo"
-      ],
-      "resumo": "Hatch completo, divulgado pela locadora como disponível para locação. Confortável para passeios mais longos pelo litoral.",
-      "slug": "fiat-argo",
-      "carroceria": "hatch",
-      "cor_ilustracao": "#EEEEEA"
     }
   ]
 }
