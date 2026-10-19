@@ -143,6 +143,33 @@
       "slug": "fiat-argo",
       "carroceria": "hatch",
       "cor_ilustracao": "#EEEEEA"
+    },
+    {
+      "marca": "Audi",
+      "modelo": "R6",
+      "versao": "1.0",
+      "categoria": "Hatch",
+      "preco_diaria": 500,
+      "destaque_home": true,
+      "imagens": [
+        {
+          "src": "img/frota/carro-mvfl0z7e0.webp",
+          "alt": "",
+          "foco": "50% 72%",
+          "w": 678,
+          "h": 452
+        }
+      ],
+      "passageiros": 5,
+      "cambio": "automatico",
+      "ar_condicionado": "sim",
+      "porta_malas_litros": 290,
+      "combustivel": "Flex",
+      "destaques_empresa": [],
+      "resumo": "",
+      "slug": "",
+      "carroceria": "hatch",
+      "cor_ilustracao": ""
     }
   ]
 }
