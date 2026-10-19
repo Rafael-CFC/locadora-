@@ -39,29 +39,6 @@
       "cor_ilustracao": "#C8372D"
     },
     {
-      "marca": "Renault",
-      "modelo": "Logan",
-      "versao": "1.0",
-      "categoria": "Sedã",
-      "preco_diaria": null,
-      "destaque_home": false,
-      "imagens": [],
-      "passageiros": 5,
-      "cambio": "manual",
-      "ar_condicionado": "confirmar",
-      "porta_malas_litros": 510,
-      "combustivel": "Flex",
-      "destaques_empresa": [
-        "Espaçoso",
-        "Conforto",
-        "Porta-malas grande"
-      ],
-      "resumo": "Sedã com o maior porta-malas da frota. Indicado para famílias, viagens com bastante bagagem ou quem vem do aeroporto com malas grandes.",
-      "slug": "renault-logan-1-0",
-      "carroceria": "sedan",
-      "cor_ilustracao": "#7B4B2E"
-    },
-    {
       "marca": "Hyundai",
       "modelo": "HB20",
       "versao": "1.0",
