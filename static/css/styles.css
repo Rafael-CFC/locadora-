@@ -792,3 +792,148 @@ body.has-compare .wa-float { translate: 0 -68px; }
   .js .reveal.is-visible { animation: fade-in 300ms ease backwards !important; animation-duration: 300ms !important; }
   .vehicle-card, .vehicle-card .car-art, .link-arrow .icon, .wizard__panel { transform: none !important; }
 }
+
+/* ==========================================================================
+   Direção visual v2 — regras da casa
+   Superfícies separadas por tom (nunca por linha ou sombra), sem gradientes,
+   sem etiquetas acima de títulos, títulos em no máximo 2 linhas, escala maior.
+   A "placa" verde e amarela da frota é o selo da marca.
+   ========================================================================== */
+:root {
+  --c-ink-2: #24333f;
+  --section-gap: clamp(5rem, 2.5rem + 7vw, 10rem);
+}
+h2 { font-size: clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem); letter-spacing: -.02em; }
+:root { --fs-h1: clamp(2.1rem, 1.4rem + 3.2vw, 3.75rem); }
+.section { padding: var(--section-gap) 0; }
+.section--flush { padding-top: 0; }
+.section-head { margin-bottom: clamp(2rem, 1rem + 3vw, 4rem); }
+.section-head__lead, .lead { color: var(--c-ink); }
+.section--deep { background: var(--c-deep); color: #fff; }
+.section--deep h2 { color: #fff; }
+.link-arrow--light { color: var(--c-sun); }
+
+/* Barra simples: sem vidro, sem linha; ao rolar, um passo de tom */
+.site-header { background: var(--c-sand); -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; }
+.site-header.is-scrolled { background: var(--c-sand-2); box-shadow: none; }
+.brand__place { text-transform: none; letter-spacing: .01em; font-size: .75rem; }
+@media (max-width: 1040px) { .site-nav { border-bottom: 0; } }
+
+/* Hero: o título atravessa a largura; abaixo, texto + consulta à esquerda e a foto da loja à direita */
+.hero { padding: clamp(2rem, 4vw, 4rem) 0 var(--section-gap); }
+.hero__title { font-size: clamp(2.4rem, 1rem + 6vw, 6rem); line-height: .98; letter-spacing: -.035em; }
+.hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 4.5rem); align-items: start; margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+.hero__lead { margin-top: 0; font-size: clamp(1.125rem, 1rem + .45vw, 1.375rem); color: var(--c-ink); }
+.hero__visual { justify-self: stretch; width: 100%; }
+.hero__photo { box-shadow: none; }
+.quick-quote {
+  grid-template-columns: 1fr 1fr; align-items: end; margin-top: var(--sp-6); padding: var(--sp-5);
+  background: var(--c-surface); border: 0; box-shadow: none;
+}
+.quick-quote__title { grid-column: 1 / -1; padding: 0; font-family: var(--f-display); font-size: 1.5rem; font-weight: 600; }
+.quick-quote .field--wide { grid-column: 1 / -1; }
+
+/* A placa: moldura verde com letreiro amarelo, como a dos carros da frota */
+.plate {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 2px; margin: 0;
+  padding: .85rem 1.5rem .95rem; border-radius: 10px; background: var(--c-primary); color: #fff;
+  outline: 3px solid var(--c-sun); outline-offset: -8px;
+}
+.plate__big { font-family: var(--f-display); font-weight: 600; font-size: clamp(2rem, 1.4rem + 1.4vw, 2.75rem); line-height: 1; color: var(--c-sun); letter-spacing: -.02em; }
+.plate__small { font-size: .8125rem; font-weight: 600; }
+.hero__plate { position: absolute; left: -28px; top: 36px; }
+@media (prefers-reduced-motion: no-preference) { .hero__plate { animation: rise 560ms var(--ease-out) 320ms both; } }
+
+@media (max-width: 960px) {
+  .hero__grid { display: flex; flex-direction: column; gap: var(--sp-5); }
+  .hero__copy { display: contents; }
+  .hero__lead { order: 1; } .hero__ctas { order: 2; margin-top: 0; } .hero__visual { order: 3; }
+  .trust { order: 4; margin-top: 0; } .quick-quote { order: 5; margin-top: 0; }
+  .hero__plate { left: 16px; top: 16px; }
+}
+@media (max-width: 420px) { .quick-quote { grid-template-columns: 1fr; } }
+
+/* Cartões da frota: tom sobre tom, sem linha */
+.vehicle-card { border: 0; }
+.vehicle-card__media { background: var(--c-sand-2); }
+.vehicle-card__meta { margin: -.25rem 0 0; color: var(--c-ink-2); font-size: var(--fs-sm); }
+.vehicle-card:hover { box-shadow: none; }
+.tags li { border: 0; background: var(--c-sand); }
+.specs--compact { border: 0; padding: 0; }
+.vehicle-intro__meta { margin: -.5rem 0 var(--sp-4); color: var(--c-ink-2); }
+
+/* Diferenciais: título à esquerda, fatos à direita */
+.split { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 6rem); align-items: start; }
+.split__head { position: sticky; top: calc(var(--header-h) + 32px); }
+.split__head .section-head__lead { margin-top: var(--sp-4); }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-7) var(--sp-6); margin: 0; }
+.facts dt { font-family: var(--f-display); font-size: 1.5rem; font-weight: 600; line-height: 1.15; margin-bottom: .5rem; letter-spacing: -.01em; }
+.facts dd { margin: 0; color: var(--c-ink); }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } .split__head { position: static; } }
+@media (max-width: 560px) { .facts { grid-template-columns: 1fr; gap: var(--sp-6); } }
+
+/* Como funciona: a ordem é dada pela posição; uma barra amarela abre cada passo */
+.steps { gap: var(--sp-6); }
+.step { padding: 0; }
+.step::before, .step:last-child::before {
+  content: ""; position: static; inset: auto; display: block; width: 48px; height: 6px; border-radius: 3px;
+  background: var(--c-sun); margin-bottom: var(--sp-5);
+}
+.step h3 { font-family: var(--f-display); font-size: 1.625rem; font-weight: 600; line-height: 1.15; margin-bottom: var(--sp-3); }
+.step p { color: var(--c-ink); font-size: var(--fs-base); }
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr 1fr; gap: var(--sp-7) var(--sp-5); }
+  .step { padding: 0; min-height: 0; }
+  .step::before { position: static; width: 48px; height: 6px; background: var(--c-sun); }
+}
+@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+/* Avaliações: citações grandes num campo verde */
+.review-card { border: 0; }
+.section--deep .reviews-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-7) var(--sp-6); align-items: start; }
+.section--deep .review-card { background: transparent; padding: 0; color: #fff; }
+.section--deep .review-card blockquote { color: #fff; font-family: var(--f-display); font-size: clamp(1.375rem, 1rem + 1vw, 2rem); line-height: 1.25; letter-spacing: -.01em; }
+.section--deep .review-card figcaption strong { color: var(--c-sun); font-size: var(--fs-base); }
+.section--deep .review-card__meta, .section--deep .review-card__meta a { color: rgba(255, 255, 255, .72); }
+.section--deep .star--on { color: var(--c-sun); }
+.section--deep .review-card--invite { background: rgba(255, 255, 255, .07); padding: var(--sp-6); border-radius: var(--r-lg); }
+.section--deep .review-card--invite p { color: rgba(255, 255, 255, .88); font-family: var(--f-body); font-size: var(--fs-base); }
+.section--deep .reviews-empty__icon { background: rgba(244, 196, 48, .16); }
+.section--deep .btn--ghost { --btn-fg: #fff; --btn-bd: rgba(255, 255, 255, .45); }
+
+/* Garopaba e região: texto à esquerda, foto da frota entre as palmeiras à direita */
+.region__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; }
+.region__copy h2 { margin-bottom: var(--sp-5); }
+.region__copy p { color: var(--c-ink); }
+.region__photo { margin: 0; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; background: var(--c-sand-2); }
+.region__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 72%; }
+.arrivals { display: grid; gap: var(--sp-5); margin: var(--sp-6) 0 0; }
+.arrivals dt { font-weight: 700; font-size: var(--fs-lg); }
+.arrivals dd { margin: .2rem 0 0; color: var(--c-ink); }
+@media (max-width: 900px) { .region__grid { grid-template-columns: 1fr; gap: var(--sp-6); } .region__photo { aspect-ratio: 4 / 3; } }
+
+/* Perguntas: blocos de tom, sem linhas */
+.faq-list { border-top: 0; display: grid; gap: .5rem; }
+.faq-item { border-bottom: 0; background: var(--c-surface); border-radius: var(--r-md); padding: 0 1.25rem; }
+.page-hero h1 { max-width: none; }
+
+/* Superfícies sem linha e sem sombra em repouso */
+.filters, .panel, .gallery, .booking-card, .wizard, .side-summary, .side-help, .contact-card, .contact-form,
+.map, .check-grid li, .empty-state, .reviews-empty, .note--soft { border: 0; box-shadow: none; }
+.filters__status { border-top: 0; padding-top: 0; }
+.note--soft, .empty-state { background: var(--c-sand-2); }
+.gallery__main { background: var(--c-sand-2); }
+.gallery__note { border-top: 0; }
+.about__photo img { box-shadow: none; }
+.contact-card h2 { text-transform: none; letter-spacing: 0; font-size: var(--fs-sm); color: var(--c-ink-2); }
+.cta-band::after { display: none; }
+@media (max-width: 1000px) { .mobile-cta { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--c-surface); border-top: 0; box-shadow: 0 -8px 24px -16px rgba(15, 30, 43, .35); } }
+
+/* Rodapé: o nome volta em tamanho total, no amarelo da placa */
+.site-footer { overflow: hidden; }
+.site-footer__title { text-transform: none; letter-spacing: 0; font-size: var(--fs-sm); font-weight: 700; }
+.site-footer__wordmark {
+  margin: var(--sp-8) 0 0; font-family: var(--f-display); font-weight: 600; white-space: nowrap;
+  font-size: clamp(3.5rem, 1rem + 13vw, 13rem); line-height: .85; letter-spacing: -.045em; color: var(--c-sun);
+}
+.site-footer__bottom { border-top: 0; margin-top: var(--sp-6); }

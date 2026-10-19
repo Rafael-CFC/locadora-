@@ -347,6 +347,7 @@ def footer():
       </ul>
     </div>
   </div>
+  <div class="container"><p class="site-footer__wordmark" aria-hidden="true">loca fácil</p></div>
   <div class="container site-footer__bottom">
     <p>© {year} {e(EMP['nome'])}. Solicitações enviadas pelo site não são reservas confirmadas: a confirmação é feita pela nossa equipe.</p>
     <a href="/privacidade/">Política de privacidade</a>
@@ -467,8 +468,8 @@ def vehicle_card(v, compare=False, heading="h3"):
   data-ar="{'1' if v['ar_condicionado'] else ''}" data-bagagem="{lug}">
   <a class="vehicle-card__media{' vehicle-card__media--photo' if v.get('imagens') else ''}" href="/veiculos/{v['slug']}/" tabindex="-1" aria-hidden="true">{vehicle_media(v)}</a>
   <div class="vehicle-card__body">
-    <p class="eyebrow">{e(v['categoria'])}</p>
     <{heading} class="vehicle-card__title"><a href="/veiculos/{v['slug']}/" data-track="vehicle_select" data-track-label="{v['slug']}">{e(name)}</a></{heading}>
+    <p class="vehicle-card__meta">{e(v['categoria'])} · {v['passageiros']} lugares</p>
     <ul class="tags">{tags}</ul>
     {spec_list(v, compact=True)}
     {price_line(v)}
@@ -578,7 +579,7 @@ def faq_fallback_note():
 </div>"""
 
 
-def cta_band(title="Pronto para conhecer Garopaba no seu ritmo?", text="Envie suas datas e receba disponibilidade e valores direto da equipe, sem compromisso."):
+def cta_band(title="Garopaba no seu ritmo", text="Envie suas datas e receba disponibilidade e valores direto da equipe, sem compromisso."):
     return f"""
 <section class="cta-band" aria-labelledby="cta-title">
   <div class="container cta-band__inner reveal">
@@ -606,7 +607,6 @@ def page_hero(eyebrow, title, lead, crumbs=None):
 <section class="page-hero">
   <div class="container">
     {bc}
-    <p class="eyebrow">{e(eyebrow)}</p>
     <h1>{title}</h1>
     <p class="lead">{lead}</p>
   </div>
@@ -630,50 +630,45 @@ def build_home():
     a = EMP["endereco"]
     body = f"""
 <section class="hero">
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <p class="eyebrow hero__eyebrow">{icon('wave')}Locadora de veículos em Garopaba · SC</p>
-      <h1 class="hero__title">Seu carro em Garopaba, <em>sem complicação.</em></h1>
-      <p class="hero__lead">Veículos revisados, seguro total incluso e contrato transparente. Retire na nossa loja em {e(a['bairro'])} e aproveite o litoral no seu ritmo, por um dia ou por um mês.</p>
-      <div class="btn-row hero__ctas">
-        <a class="btn btn--primary btn--lg" href="/veiculos/" data-track="cta_click" data-track-label="hero_veiculos">Ver veículos{icon('arrow')}</a>
-        <a class="btn btn--ghost btn--lg" href="{wa_url('Olá! Vim pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="hero">{icon('whatsapp')}Falar no WhatsApp</a>
-      </div>
-      <ul class="trust" aria-label="Por que alugar com a gente">
-        <li>{icon('shield')}Seguro total incluso</li>
-        <li>{icon('check')}Veículos revisados e vistoriados</li>
-        <li>{icon('store')}Loja física em Garopaba</li>
-      </ul>
-    </div>
-    <div class="hero__visual">
-      <figure class="hero__photo">
-        <img src="/img/frota/mobi-loja.webp" alt="Fiat Mobi da frota estacionado em frente à loja, com coqueiros ao fundo" width="437" height="538" fetchpriority="high">
-      </figure>
-      <div class="hero__badge">
-        <span class="hero__badge-label">Diárias a partir de</span>
-        <strong>{brl(EMP['diaria_a_partir'])}</strong>
-        <span class="hero__badge-foot">{pending('confirmar R$ 160 x R$ 180', 'diária ou mensal')}</span>
-      </div>
-    </div>
-  </div>
   <div class="container">
-    <form class="quick-quote reveal" action="/reserva/" method="get" data-quick-quote novalidate aria-labelledby="qq-title">
-      <h2 id="qq-title" class="quick-quote__title">{icon('calendar')}Consulte disponibilidade</h2>
-      <div class="field">
-        <label for="qq-ret">Retirada</label>
-        <input id="qq-ret" name="retirada" type="date" required data-min-today>
+    <h1 class="hero__title">Aluguel de carros em Garopaba</h1>
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="hero__lead">Veículos revisados, seguro total incluso e contrato transparente. Retire na nossa loja em {e(a['bairro'])} e aproveite o litoral por um dia ou por um mês.</p>
+        <div class="btn-row hero__ctas">
+          <a class="btn btn--primary btn--lg" href="/veiculos/" data-track="cta_click" data-track-label="hero_veiculos">Ver veículos{icon('arrow')}</a>
+          <a class="btn btn--ghost btn--lg" href="{wa_url('Olá! Vim pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="hero">{icon('whatsapp')}Falar no WhatsApp</a>
+        </div>
+        <ul class="trust" aria-label="Por que alugar com a gente">
+          <li>{icon('shield')}Seguro total incluso</li>
+          <li>{icon('check')}Veículos revisados e vistoriados</li>
+          <li>{icon('store')}Loja física em Garopaba</li>
+        </ul>
+        <form class="quick-quote" action="/reserva/" method="get" data-quick-quote novalidate aria-labelledby="qq-title">
+          <h2 id="qq-title" class="quick-quote__title">Consulte as suas datas</h2>
+          <div class="field">
+            <label for="qq-ret">Retirada</label>
+            <input id="qq-ret" name="retirada" type="date" required data-min-today>
+          </div>
+          <div class="field">
+            <label for="qq-dev">Devolução</label>
+            <input id="qq-dev" name="devolucao" type="date" required data-min-today>
+          </div>
+          <div class="field field--wide">
+            <label for="qq-car">Veículo</label>
+            <select id="qq-car" name="veiculo">{vehicle_options()}</select>
+          </div>
+          <button class="btn btn--primary btn--lg field--wide" type="submit">Continuar{icon('arrow')}</button>
+          <p class="field-error quick-quote__error" data-qq-error hidden></p>
+        </form>
       </div>
-      <div class="field">
-        <label for="qq-dev">Devolução</label>
-        <input id="qq-dev" name="devolucao" type="date" required data-min-today>
+      <div class="hero__visual">
+        <figure class="hero__photo">
+          <img src="/img/frota/mobi-loja.webp" alt="Fiat Mobi da frota estacionado em frente à loja, com coqueiros ao fundo" width="437" height="538" fetchpriority="high">
+        </figure>
+        <p class="plate hero__plate"><span class="plate__small">Diárias a partir de</span><strong class="plate__big">{brl(EMP['diaria_a_partir'])}</strong><span class="plate__small">{pending('confirmar R$ 160 x R$ 180', 'por diária ou mensal')}</span></p>
       </div>
-      <div class="field field--wide">
-        <label for="qq-car">Veículo</label>
-        <select id="qq-car" name="veiculo">{vehicle_options()}</select>
-      </div>
-      <button class="btn btn--primary btn--lg" type="submit">Continuar{icon('arrow')}</button>
-      <p class="field-error quick-quote__error" data-qq-error hidden></p>
-    </form>
+    </div>
   </div>
 </section>
 
@@ -681,7 +676,6 @@ def build_home():
   <div class="container">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Frota</p>
         <h2 id="frota-title">Carros econômicos para o litoral</h2>
         <p class="section-head__lead">Do compacto para circular entre as praias ao sedã com porta-malas grande para a família inteira.</p>
       </div>
@@ -692,19 +686,19 @@ def build_home():
 </section>
 
 <section class="section section--tint" aria-labelledby="dif-title">
-  <div class="container">
-    <div class="section-head section-head--center">
-      <p class="eyebrow">Por que a Loca Fácil</p>
-      <h2 id="dif-title">Alugar um carro deveria ser simples</h2>
+  <div class="container split">
+    <div class="split__head reveal">
+      <h2 id="dif-title">Por que alugar aqui</h2>
+      <p class="section-head__lead">Sem pacote surpresa no balcão e sem aplicativo no meio: você fala com gente da loja e sabe tudo antes de assinar.</p>
     </div>
-    <div class="features">
-      <article class="feature reveal"><div class="feature__icon">{icon('shield')}</div><h3>Seguro total incluso</h3><p>Você dirige com tranquilidade: o seguro já faz parte da locação, sem pacote extra para descobrir no balcão.</p></article>
-      <article class="feature reveal"><div class="feature__icon">{icon('check')}</div><h3>Revisados e vistoriados</h3><p>Cada veículo passa por revisão e vistoria antes de chegar às suas mãos.</p></article>
-      <article class="feature reveal"><div class="feature__icon">{icon('file')}</div><h3>Contrato transparente</h3><p>Condições explicadas antes da assinatura. Sem surpresas na devolução.</p></article>
-      <article class="feature reveal"><div class="feature__icon">{icon('key')}</div><h3>Cadastro rápido</h3><p>Sem a burocracia de aplicativo: você fala com gente de verdade e resolve pelo WhatsApp.</p></article>
-      <article class="feature reveal"><div class="feature__icon">{icon('calendar')}</div><h3>Diária ou mensal</h3><p>Para o fim de semana, para a temporada ou para quem precisa de um carro por mais tempo.</p></article>
-      <article class="feature reveal"><div class="feature__icon">{icon('briefcase')}</div><h3>Pessoas e empresas</h3><p>Atendemos turistas, moradores e empresas que precisam de mobilidade na região.</p></article>
-    </div>
+    <dl class="facts">
+      <div class="reveal"><dt>Seguro total incluso</dt><dd>O seguro já faz parte da locação. Nada de pacote extra para descobrir na hora da retirada.</dd></div>
+      <div class="reveal"><dt>Revisados e vistoriados</dt><dd>Cada carro passa por revisão e vistoria antes de chegar às suas mãos.</dd></div>
+      <div class="reveal"><dt>Contrato transparente</dt><dd>As condições são explicadas antes da assinatura. Sem surpresas na devolução.</dd></div>
+      <div class="reveal"><dt>Cadastro rápido</dt><dd>Você resolve pelo WhatsApp, com a equipe da loja, sem burocracia.</dd></div>
+      <div class="reveal"><dt>Diária ou mensal</dt><dd>Para o fim de semana, para a temporada ou para quem precisa de um carro por mais tempo.</dd></div>
+      <div class="reveal"><dt>Pessoas e empresas</dt><dd>Turistas, moradores e empresas que precisam de mobilidade em Garopaba e região.</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -712,28 +706,24 @@ def build_home():
   <div class="container">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Como funciona</p>
         <h2 id="how-title">Do pedido à chave na mão</h2>
         <p class="section-head__lead">Sem pagamento pelo site e sem cadastro em aplicativo. Você só fecha quando tiver todas as informações.</p>
       </div>
     </div>
     <ol class="steps">
-      <li class="step reveal"><span class="step__num">1</span><h3>Escolha o carro e as datas</h3><p>Veja a frota ou peça orientação se ainda não souber qual modelo combina com a sua viagem.</p></li>
-      <li class="step reveal"><span class="step__num">2</span><h3>Envie a solicitação</h3><p>O site monta a mensagem com tudo preenchido e você envia pelo WhatsApp em um toque.</p></li>
-      <li class="step reveal"><span class="step__num">3</span><h3>Receba a confirmação</h3><p>A equipe confere a disponibilidade e responde com valor e condições. A reserva vale a partir dessa confirmação.</p></li>
-      <li class="step reveal"><span class="step__num">4</span><h3>Retire e aproveite</h3><p>Retire o carro na loja em {e(a['bairro'])}, com contrato claro e seguro incluso.</p></li>
+      <li class="step reveal"><h3>Escolha o carro e as datas</h3><p>Veja a frota ou peça orientação se ainda não souber qual modelo combina com a sua viagem.</p></li>
+      <li class="step reveal"><h3>Envie a solicitação</h3><p>O site monta a mensagem com tudo preenchido e você envia pelo WhatsApp em um toque.</p></li>
+      <li class="step reveal"><h3>Receba a confirmação</h3><p>A equipe confere a disponibilidade e responde com valor e condições. A reserva vale a partir daí.</p></li>
+      <li class="step reveal"><h3>Retire e aproveite</h3><p>Retire o carro na loja em {e(a['bairro'])}, com contrato claro e seguro incluso.</p></li>
     </ol>
   </div>
 </section>
 
-<section class="section section--tint" aria-labelledby="rev-title">
+<section class="section section--deep" aria-labelledby="rev-title">
   <div class="container">
     <div class="section-head">
-      <div>
-        <p class="eyebrow">Avaliações</p>
-        <h2 id="rev-title">Quem já alugou com a gente</h2>
-      </div>
-      <a class="link-arrow" href="/avaliacoes/">Todas as avaliações{icon('arrow')}</a>
+      <h2 id="rev-title">Quem já alugou com a gente</h2>
+      <a class="link-arrow link-arrow--light" href="/avaliacoes/">Todas as avaliações{icon('arrow')}</a>
     </div>
     {reviews_block(limit=3)}
   </div>
@@ -742,24 +732,25 @@ def build_home():
 <section class="section region" aria-labelledby="region-title">
   <div class="container region__grid">
     <div class="region__copy reveal">
-      <p class="eyebrow">Garopaba e região</p>
-      <h2 id="region-title">As melhores praias ficam a alguns minutos de carro</h2>
-      <p>Garopaba é feita de praias, trilhas e mirantes espalhados pelo litoral. Silveira, Ferrugem, Siriú e Gamboa ficam em direções diferentes, e a Praia do Rosa e a Lagoa de Ibiraquera estão logo ali, em Imbituba. Com um carro, você escolhe a praia conforme o vento e o mar do dia, sem depender de horário de ônibus ou de corrida por aplicativo.</p>
-      <p>Na temporada das baleias-francas, entre o inverno e a primavera, ter um carro também facilita chegar cedo aos pontos de observação.</p>
+      <h2 id="region-title">Praias a minutos de carro</h2>
+      <p>Garopaba é feita de praias, trilhas e mirantes espalhados pelo litoral. Silveira, Ferrugem, Siriú e Gamboa ficam em direções diferentes, e a Praia do Rosa e a Lagoa de Ibiraquera estão logo ali, em Imbituba. Com um carro, você escolhe a praia conforme o vento e o mar do dia, sem depender de horário de ônibus.</p>
+      <p>Na temporada das baleias-francas, entre o inverno e a primavera, o carro também facilita chegar cedo aos pontos de observação.</p>
+      <dl class="arrivals">
+        <div><dt>Chegando de avião</dt><dd>O aeroporto de Florianópolis fica a cerca de 90 km. Combine com a equipe o horário de retirada para a sua chegada.</dd></div>
+        <div><dt>Chegando de ônibus</dt><dd>Desembarque em Garopaba e retire o carro na loja para circular pela região.</dd></div>
+        <div><dt>Mora ou trabalha aqui</dt><dd>Carro reserva para imprevistos, aluguel mensal e atendimento para empresas.</dd></div>
+      </dl>
     </div>
-    <ul class="region__cards">
-      <li class="region-card reveal">{icon('plane')}<div><h3>Chegando de avião</h3><p>O aeroporto de Florianópolis fica a cerca de 90 km. Combine com a equipe o melhor horário de retirada para a sua chegada.</p></div></li>
-      <li class="region-card reveal">{icon('bus')}<div><h3>Chegando de ônibus</h3><p>Desembarque em Garopaba e retire o carro na loja para circular pela região com liberdade.</p></div></li>
-      <li class="region-card reveal">{icon('sun')}<div><h3>Mora ou trabalha aqui?</h3><p>Carro reserva para imprevistos, aluguel mensal e atendimento para empresas.</p></div></li>
-    </ul>
+    <figure class="region__photo reveal">
+      <img src="/img/frota/kwid-laranja.webp" alt="Renault Kwid laranja estacionado entre palmeiras e um quiosque de palha" width="410" height="523" loading="lazy" decoding="async">
+    </figure>
   </div>
 </section>
 
-<section class="section" aria-labelledby="faq-title">
+<section class="section section--tint" aria-labelledby="faq-title">
   <div class="container faq-layout">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Dúvidas frequentes</p>
         <h2 id="faq-title">Antes de solicitar</h2>
         <p class="section-head__lead">As respostas mais procuradas por quem está planejando a viagem.</p>
         <a class="link-arrow" href="/perguntas-frequentes/">Ver todas as perguntas{icon('arrow')}</a>
@@ -786,7 +777,7 @@ def build_catalog():
     pax_opts = "".join(f'<option value="{p}">{p} ou mais</option>' for p in pax)
     cards = "".join(vehicle_card(v, compare=True, heading="h2") for v in FLEET)
     body = f"""
-{page_hero('Frota', 'Veículos para alugar em Garopaba', 'Todos com seguro total incluso e revisados antes de cada locação. Filtre pelo que importa na sua viagem e solicite com as suas datas.', [('Início', '/'), ('Veículos', None)])}
+{page_hero('Frota', 'Carros para alugar', 'Frota da Loca Fácil em Garopaba, toda com seguro total incluso e revisados antes de cada locação. Filtre pelo que importa na sua viagem e solicite com as suas datas.', [('Início', '/'), ('Veículos', None)])}
 <section class="section section--flush">
   <div class="container">
     <form class="filters" data-filters aria-label="Filtrar veículos" onsubmit="return false">
@@ -920,8 +911,8 @@ def build_vehicle(v):
     <div class="vehicle-layout__main">
       {gallery}
       <div class="vehicle-intro">
-        <p class="eyebrow">{e(v['categoria'])}</p>
         <h1>{e(name)}</h1>
+        <p class="vehicle-intro__meta">{e(v['categoria'])} · {v['passageiros']} lugares</p>
         <ul class="tags">{tags}</ul>
         <p class="lead">{e(v['resumo'])}</p>
         {spec_list(v)}
@@ -961,7 +952,7 @@ def build_vehicle(v):
 </section>
 <section class="section section--tint" aria-labelledby="rec-title">
   <div class="container">
-    <div class="section-head"><div><p class="eyebrow">Compare também</p><h2 id="rec-title">Outros veículos da frota</h2></div><a class="link-arrow" href="/veiculos/">Ver todos{icon('arrow')}</a></div>
+    <div class="section-head"><div><h2 id="rec-title">Outros veículos da frota</h2></div><a class="link-arrow" href="/veiculos/">Ver todos{icon('arrow')}</a></div>
     <div class="vehicle-grid">{rec}</div>
   </div>
 </section>
@@ -996,7 +987,7 @@ def build_reserva():
     )
     loja = f"Loja – {a['bairro']}, Garopaba"
     body = f"""
-{page_hero('Solicitação de reserva', 'Solicite seu carro em poucos passos', 'Preencha o essencial e envie pelo WhatsApp com tudo já organizado. A equipe confirma disponibilidade, valor e condições antes de qualquer reserva.', [('Início', '/'), ('Solicitar reserva', None)])}
+{page_hero('Solicitação de reserva', 'Solicite seu carro', 'Em poucos passos: preencha o essencial e envie pelo WhatsApp com tudo já organizado. A equipe confirma disponibilidade, valor e condições antes de qualquer reserva.', [('Início', '/'), ('Solicitar reserva', None)])}
 <section class="section section--flush">
   <div class="container booking">
     <form class="wizard" data-wizard novalidate aria-label="Solicitação de reserva">
@@ -1120,7 +1111,7 @@ def build_sobre():
     )
     difs = "".join(f"<li>{icon('check')}<span>{e(d)}</span></li>" for d in EMP["diferenciais"])
     body = f"""
-{page_hero('Sobre a locadora', 'Mobilidade com segurança, preço justo e atendimento de verdade', 'Somos uma locadora de Garopaba, com loja física e atendimento próximo para quem visita, mora ou trabalha na região.', [('Início', '/'), ('Sobre', None)])}
+{page_hero('Sobre a locadora', 'Sobre a Loca Fácil', 'Mobilidade com segurança, preço justo e atendimento de verdade. Somos uma locadora de Garopaba, com loja física e atendimento próximo para quem visita, mora ou trabalha na região.', [('Início', '/'), ('Sobre', None)])}
 <section class="section section--flush">
   <div class="container about">
     <div class="about__text prose reveal">
@@ -1135,7 +1126,7 @@ def build_sobre():
 </section>
 <section class="section section--tint" aria-labelledby="dif2">
   <div class="container">
-    <div class="section-head"><div><p class="eyebrow">Diferenciais</p><h2 id="dif2">O que você encontra aqui</h2></div></div>
+    <div class="section-head"><div><h2 id="dif2">O que você encontra aqui</h2></div></div>
     <ul class="check-grid">{difs}</ul>
   </div>
 </section>
@@ -1177,7 +1168,7 @@ def build_faq():
         if items:
             groups.append(f'<section class="faq-group reveal" aria-labelledby="g-{cat[:4]}"><h2 id="g-{cat[:4]}">{e(cat)}</h2><div class="faq-list">{items}</div></section>')
     body = f"""
-{page_hero('Perguntas frequentes', 'Tudo o que você precisa saber antes de alugar', 'Respostas diretas sobre reserva, valores, retirada e devolução. Se a sua dúvida não estiver aqui, a equipe responde pelo WhatsApp.', [('Início', '/'), ('Perguntas frequentes', None)])}
+{page_hero('Perguntas frequentes', 'Perguntas frequentes', 'Tudo o que você precisa saber antes de alugar. Respostas diretas sobre reserva, valores, retirada e devolução. Se a sua dúvida não estiver aqui, a equipe responde pelo WhatsApp.', [('Início', '/'), ('Perguntas frequentes', None)])}
 <section class="section section--flush">
   <div class="container narrow">
     {''.join(groups)}
@@ -1280,7 +1271,7 @@ def build_404():
     body = f"""
 <section class="page-hero page-hero--center">
   <div class="container narrow">
-    <p class="eyebrow">Erro 404</p>
+
     <h1>Esta página saiu para passear</h1>
     <p class="lead">O endereço pode ter mudado. Que tal ver a frota ou falar com a equipe?</p>
     <div class="btn-row btn-row--center">
