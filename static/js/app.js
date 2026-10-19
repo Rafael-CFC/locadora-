@@ -49,6 +49,12 @@
     const [y, m, d] = iso.split('-');
     return `${d}/${m}/${y}`;
   };
+  const WEEKDAYS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+  const fmtDateLong = (iso) => {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-').map(Number);
+    return `${WEEKDAYS[new Date(y, m - 1, d).getDay()]}, ${fmtDate(iso)}`;
+  };
   const toDate = (date, time) => (date ? new Date(`${date}T${time || '00:00'}`) : null);
   const daysBetween = (a, b) => Math.max(1, Math.ceil((b - a) / 86400000));
   const plural = (n, s, p) => `${n} ${n === 1 ? s : p}`;
@@ -293,7 +299,14 @@
         html = `<dl><dt>Retirada</dt><dd>${fmtDate(el.retirada.value)} · ${el.retirada_hora.value}</dd>`
           + `<dt>Devolução</dt><dd>${fmtDate(el.devolucao.value)} · ${el.devolucao_hora.value}</dd>`
           + `<dt>Período</dt><dd>${plural(daysBetween(r, d), 'dia', 'dias')}</dd></dl>`;
-        waBtn.href = waLink(`Olá! Gostaria de saber a disponibilidade do ${name} de ${fmtDate(el.retirada.value)} (${el.retirada_hora.value}) a ${fmtDate(el.devolucao.value)} (${el.devolucao_hora.value}).`);
+        waBtn.href = waLink([
+          'Olá, Loca Fácil! 👋',
+          `Quero saber a disponibilidade do *${name}*.`,
+          '',
+          `📅 *Retirada:* ${fmtDateLong(el.retirada.value)} às ${el.retirada_hora.value}`,
+          `📅 *Devolução:* ${fmtDateLong(el.devolucao.value)} às ${el.devolucao_hora.value}`,
+          `⏱️ *Período:* ${plural(daysBetween(r, d), 'dia', 'dias')}`,
+        ].join('\n'));
       } else if (r && d) {
         html = '<p class="field-error">A devolução precisa ser depois da retirada.</p>';
       } else if (showErrors) {
@@ -365,7 +378,7 @@
     ['veiculo', 'retirada', 'devolucao', 'retirada_hora', 'devolucao_hora'].forEach((k) => { if (url.get(k)) initial[k] = url.get(k); });
     if (initial.retirada && initial.retirada < todayISO()) delete initial.retirada;
     if (initial.devolucao && initial.devolucao < todayISO()) delete initial.devolucao;
-    if (initial.veiculo && !bySlug[initial.veiculo] && initial.veiculo !== 'orientacao') delete initial.veiculo;
+    if (initial.veiculo && !bySlug[initial.veiculo] && !['orientacao', 'economico'].includes(initial.veiculo)) delete initial.veiculo;
     Object.entries(initial).forEach(([k, v]) => {
       const f = el[k];
       if (!f || v == null) return;
@@ -418,19 +431,33 @@
       return errs;
     };
 
+    // Mensagem em blocos curtos: fácil de ler no WhatsApp e de responder pela equipe.
+    const vehicleLine = (d) => ({
+      economico: 'Qualquer modelo: *o mais econômico disponível* nas minhas datas',
+      orientacao: 'Ainda não escolhi, gostaria de uma indicação',
+    }[d.veiculo] || `*${vehicleLabel(d)}*`);
     const buildMessage = (d) => {
       const lines = [
-        'Olá! Gostaria de solicitar um orçamento de locação pelo site.',
+        'Olá, Loca Fácil! 👋',
+        'Gostaria de um *orçamento de aluguel de carro*.',
         '',
-        `*Veículo:* ${vehicleLabel(d)}`,
-        `*Retirada:* ${fmtDate(d.retirada)} às ${d.retirada_hora} – ${pickupLabel(d)}`,
-        `*Devolução:* ${fmtDate(d.devolucao)} às ${d.devolucao_hora} – ${returnLabel(d)}`,
-        `*Período:* ${plural(period(d), 'dia', 'dias')}`,
-        `*Nome:* ${d.nome}`,
-        `*Locação para:* ${d.cliente}`,
+        '🚗 *Veículo*',
+        vehicleLine(d),
+        '',
+        '📅 *Retirada*',
+        `${fmtDateLong(d.retirada)} às ${d.retirada_hora}`,
+        `📍 ${pickupLabel(d)}`,
+        '',
+        '📅 *Devolução*',
+        `${fmtDateLong(d.devolucao)} às ${d.devolucao_hora}`,
+        `📍 ${d.mesmo_local === 'on' ? 'No mesmo local da retirada' : returnLabel(d)}`,
+        '',
+        `⏱️ *Período:* ${plural(period(d), 'dia', 'dias')}`,
+        `👤 *Nome:* ${d.nome}`,
+        `🧾 *Locação para:* ${d.cliente}`,
       ];
-      if (d.observacoes) lines.push(`*Observações:* ${d.observacoes}`);
-      lines.push('', 'Aguardo a confirmação de disponibilidade, valor e condições.');
+      if (d.observacoes) lines.push('', '📝 *Observações*', d.observacoes);
+      lines.push('', '_Enviado pelo site. Aguardo a confirmação de disponibilidade e valores._');
       return lines.join('\n');
     };
 
@@ -580,7 +607,7 @@
       setError(contactForm, 'mensagem', msg.length < 5 ? 'Escreva sua mensagem.' : '');
       if (nome.length < 2) { el.nome.focus(); return; }
       if (msg.length < 5) { el.mensagem.focus(); return; }
-      const text = `Olá! Meu nome é ${nome}.\n*Assunto:* ${el.assunto.value}\n\n${msg}`;
+      const text = ['Olá, Loca Fácil! 👋', `Meu nome é *${nome}*.`, '', `📌 *Assunto:* ${el.assunto.value}`, '', msg].join('\n');
       track('whatsapp_click', { label: 'formulario_contato' });
       const win = window.open(waLink(text), '_blank', 'noopener');
       if (!win) window.location.href = waLink(text);
