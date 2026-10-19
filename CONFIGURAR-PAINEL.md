@@ -22,36 +22,29 @@ Nenhum dado de cliente passa por aí: só carros, avisos e dados da empresa.
      - **Actions:** Read-only (o painel mostra quando o site terminou de atualizar)
 3. Clique em **Generate token** e copie o código (`github_pat_…`). Ele aparece uma vez só. **Não envie para ninguém.**
 
-## 2. Criar o serviço na Cloudflare
+## 2. Criar o serviço na Cloudflare (conectado ao GitHub)
 
-1. Crie uma conta gratuita em **dash.cloudflare.com** (pode ser com o e-mail da locadora).
-2. No menu, abra **Compute (Workers) → Workers & Pages → Create → Create Worker** (modelo *Hello World*).
-3. Nome: `locafacil-painel` → **Deploy**.
-4. Clique em **Edit code**, apague tudo, cole o conteúdo de `painel-api/worker.js` e clique em **Deploy**.
+1. Crie uma conta gratuita em **dash.cloudflare.com**.
+2. Abra **Compute (Workers) → Workers & Pages → Create application → Import a repository**, conecte o GitHub e escolha o repositório **locadora-**. Nome do projeto: `locadora`. Mantenha os comandos sugeridos e clique em **Deploy**.
+3. A Cloudflare lê o arquivo `wrangler.jsonc` do repositório e publica `painel-api/worker.js`. A cada push, o serviço é atualizado sozinho.
 
-## 3. Colocar as configurações
+O endereço fica `https://locadora.SUBDOMINIO.workers.dev` (o subdomínio aparece em **Workers & Pages → Account details**).
 
-No Worker, abra **Settings → Variables and Secrets → Add** e crie:
+## 3. Colocar os segredos
+
+No projeto `locadora`, abra **Settings → Variables and Secrets → Add** e crie os três como **Secret**:
 
 | Nome | Tipo | Valor |
 | --- | --- | --- |
-| `GITHUB_TOKEN` | **Secret** | o token do passo 1 |
-| `GITHUB_REPO` | Text | `Rafael-CFC/locadora-` |
-| `ALLOWED_ORIGIN` | Text | `https://rafael-cfc.github.io` (quando houver domínio próprio, acrescente: `https://rafael-cfc.github.io, https://www.seudominio.com.br`) |
-| `PAINEL_EMAIL` | Text | o e-mail que o cliente vai usar para entrar |
-| `PAINEL_SENHA` | **Secret** | uma senha forte (12+ caracteres) para o cliente |
+| `GITHUB_TOKEN` | Secret | o token do passo 1 |
+| `PAINEL_EMAIL` | Secret | o e-mail que o cliente vai usar para entrar |
+| `PAINEL_SENHA` | Secret | uma senha forte (12+ caracteres) para o cliente |
 
-Clique em **Deploy** para salvar.
+`GITHUB_REPO`, `GITHUB_BRANCH` e `ALLOWED_ORIGIN` já estão no `wrangler.jsonc`. Variáveis do tipo *Text* criadas no painel da Cloudflare são apagadas a cada publicação; por isso use sempre **Secret**. Quando houver domínio próprio, acrescente-o em `ALLOWED_ORIGIN` no `wrangler.jsonc` (separado por vírgula).
 
 ## 4. Ligar o painel ao serviço
 
-Copie o endereço do Worker (aparece no topo, algo como `https://locafacil-painel.SUACONTA.workers.dev`) e coloque em `static/painel/config.js`, na linha com `''`:
-
-```js
-  : 'https://locafacil-painel.SUACONTA.workers.dev';
-```
-
-Publique (commit e push). O endereço não é segredo.
+O endereço do serviço fica em `static/painel/config.js` (já configurado para `https://locadora.fenianosrafael.workers.dev`).
 
 ## 5. Testar
 

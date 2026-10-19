@@ -1,0 +1,15 @@
+// Configuração do serviço do painel na Cloudflare (Worker "locadora").
+// A Cloudflare lê este arquivo a cada push e publica painel-api/worker.js.
+// Segredos (GITHUB_TOKEN, PAINEL_EMAIL, PAINEL_SENHA) ficam só no painel da Cloudflare.
+{
+  "name": "locadora",
+  "main": "painel-api/worker.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "vars": {
+    "GITHUB_REPO": "Rafael-CFC/locadora-",
+    "GITHUB_BRANCH": "main",
+    "ALLOWED_ORIGIN": "https://rafael-cfc.github.io"
+  },
+  "observability": { "enabled": true }
+}
