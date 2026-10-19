@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F3EC">
+<title>Painel · Loca Fácil</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="painel.css">
+</head>
+<body>
+<div class="p-app" data-app>
+
+  <!-- Tela de login -->
+  <section class="p-login" data-tela="login">
+    <form class="p-login__card" data-login novalidate>
+      <div class="p-marca">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0E5A43"/><path d="M8 25.5v-3.2c0-1 .7-1.8 1.7-2l3.3-.6 3.6-4.3c.6-.7 1.4-1.1 2.3-1.1h6.4c.9 0 1.7.4 2.3 1l3.4 4.2 1.6.4c1 .3 1.6 1.1 1.6 2.1v3.5c0 .6-.4 1-1 1h-1.5a3.2 3.2 0 0 0-6.2 0h-8.6a3.2 3.2 0 0 0-6.2 0H9c-.6 0-1-.4-1-1z" fill="#F4C430"/><circle cx="15" cy="26.6" r="2.3" fill="#F4C430"/><circle cx="27.8" cy="26.6" r="2.3" fill="#F4C430"/></svg>
+        <span><small>Garopaba</small>Loca Fácil</span>
+      </div>
+      <h1>Painel da locadora</h1>
+      <p class="p-muted">Atualize carros, preços, fotos e avisos do site.</p>
+      <label class="p-field"><span>E-mail</span><input name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="none" required></label>
+      <label class="p-field"><span>Senha</span>
+        <span class="p-senha"><input name="senha" type="password" autocomplete="current-password" required><button type="button" class="p-link" data-ver-senha>Mostrar</button></span>
+      </label>
+      <p class="p-erro" data-login-erro hidden></p>
+      <button class="p-btn p-btn--primario p-btn--grande" type="submit">Entrar</button>
+      <p class="p-aviso-config" data-sem-api hidden>O painel ainda não foi conectado ao serviço de publicação. Veja o guia de configuração.</p>
+    </form>
+  </section>
+
+  <!-- Painel -->
+  <section class="p-painel" data-tela="painel" hidden>
+    <header class="p-topo">
+      <div class="p-topo__linha">
+        <div class="p-marca p-marca--pequena">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0E5A43"/><path d="M8 25.5v-3.2c0-1 .7-1.8 1.7-2l3.3-.6 3.6-4.3c.6-.7 1.4-1.1 2.3-1.1h6.4c.9 0 1.7.4 2.3 1l3.4 4.2 1.6.4c1 .3 1.6 1.1 1.6 2.1v3.5c0 .6-.4 1-1 1h-1.5a3.2 3.2 0 0 0-6.2 0h-8.6a3.2 3.2 0 0 0-6.2 0H9c-.6 0-1-.4-1-1z" fill="#F4C430"/><circle cx="15" cy="26.6" r="2.3" fill="#F4C430"/><circle cx="27.8" cy="26.6" r="2.3" fill="#F4C430"/></svg>
+          <span><small>Painel</small>Loca Fácil</span>
+        </div>
+        <div class="p-topo__acoes">
+          <a class="p-btn p-btn--leve" data-ver-site target="_blank" rel="noopener">Ver site</a>
+          <button class="p-btn p-btn--leve" type="button" data-sair>Sair</button>
+        </div>
+      </div>
+      <nav class="p-abas" aria-label="Seções do painel">
+        <button type="button" class="p-aba" data-aba="carros" aria-current="page">Carros</button>
+        <button type="button" class="p-aba" data-aba="avisos">Avisos</button>
+        <button type="button" class="p-aba" data-aba="empresa">Empresa</button>
+      </nav>
+    </header>
+
+    <div class="p-status" data-status hidden></div>
+
+    <main class="p-conteudo">
+      <div data-vista="carros"></div>
+      <div data-vista="editor" hidden></div>
+      <div data-vista="avisos" hidden></div>
+      <div data-vista="empresa" hidden></div>
+    </main>
+
+    <div class="p-publicar" data-barra-publicar hidden>
+      <p><strong>Alterações não publicadas</strong><span data-resumo-alteracoes></span></p>
+      <div class="p-publicar__acoes">
+        <button type="button" class="p-btn p-btn--leve" data-descartar>Descartar</button>
+        <button type="button" class="p-btn p-btn--primario" data-publicar>Publicar no site</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="p-carregando" data-carregando hidden><span></span>Carregando…</div>
+</div>
+<div class="p-toast" role="status" aria-live="polite" data-toast></div>
+<dialog class="p-dialogo" data-dialogo>
+  <form method="dialog">
+    <p data-dialogo-texto></p>
+    <div class="p-dialogo__acoes">
+      <button class="p-btn p-btn--leve" value="nao">Cancelar</button>
+      <button class="p-btn p-btn--perigo" value="sim" data-dialogo-ok>Confirmar</button>
+    </div>
+  </form>
+</dialog>
+<script src="config.js"></script>
+<script src="painel.js"></script>
+</body>
+</html>

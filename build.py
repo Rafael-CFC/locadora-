@@ -158,6 +158,13 @@ def normalize_company(c):
 
 EMP = normalize_company(load("empresa.json"))
 FLEET = [normalize_vehicle(v) for v in load("veiculos.json")["veiculos"]]
+_vistos = set()
+for _v in FLEET:  # dois carros com o mesmo nome ganham endereços diferentes
+    _base, _n = _v["slug"], 2
+    while _v["slug"] in _vistos:
+        _v["slug"] = f"{_base}-{_n}"
+        _n += 1
+    _vistos.add(_v["slug"])
 FAQ = [{**q, "resposta": None if blank(q.get("resposta")) else q["resposta"]} for q in load("faq.json")["perguntas"]]
 REVIEWS_ALL = [{**r, "data": None if blank(r.get("data")) else r["data"]} for r in load("avaliacoes.json")["avaliacoes"]]
 AVISOS = [a for a in load_optional("avisos.json", "avisos") if a.get("ativo") and not blank(a.get("texto"))]
@@ -310,7 +317,7 @@ CAR_BODIES = {
 
 def car_svg(v, cls="car-art"):
     body = CAR_BODIES.get(v.get("carroceria"), CAR_BODIES["hatch"])
-    color = v.get("cor_ilustracao", "#9aa4ad")
+    color = v.get("cor_ilustracao") or "#9aa4ad"
     light = color.lower() in ("#eeeeea", "#ffffff", "#f1f1ee")
     stroke = ' stroke="#c9c6bd" stroke-width="1.5"' if light else ""
     wy, r = body["wy"], body["r"]
@@ -491,7 +498,7 @@ def footer():
   <div class="container"><p class="site-footer__wordmark" aria-hidden="true">loca fácil</p></div>
   <div class="container site-footer__bottom">
     <p>© {year} {e(EMP['nome'])}. Solicitações enviadas pelo site não são reservas confirmadas: a confirmação é feita pela nossa equipe.</p>
-    <a href="/privacidade/">Política de privacidade</a>
+    <p class="site-footer__links"><a href="/privacidade/">Política de privacidade</a> · <a href="/painel/" rel="nofollow">Área da locadora</a></p>
   </div>
 </footer>
 <a class="wa-float" href="{wa_url('Olá! Vim pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="flutuante" aria-label="Falar com a Loca Fácil pelo WhatsApp">{icon('whatsapp')}<span>WhatsApp</span></a>"""

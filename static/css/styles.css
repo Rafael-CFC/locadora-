@@ -944,3 +944,5 @@ h2 { font-size: clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem); letter-spacing: -.02em; 
 .aviso p { margin: 0; font-weight: 600; font-size: var(--fs-sm); }
 .aviso a { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; font-size: var(--fs-sm); color: var(--c-ink); }
 .aviso a .icon { width: 1em; height: 1em; }
+
+.site-footer__links { white-space: nowrap; }
