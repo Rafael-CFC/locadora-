@@ -282,15 +282,26 @@ def icon(name, cls="icon"):
     )
 
 
-BRAND_MARK = (
-    '<svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">'
-    '<rect width="40" height="40" rx="11" fill="var(--c-primary)"/>'
-    '<path d="M8 25.5v-3.2c0-1 .7-1.8 1.7-2l3.3-.6 3.6-4.3c.6-.7 1.4-1.1 2.3-1.1h6.4c.9 0 1.7.4 2.3 1l3.4 4.2 1.6.4c1 .3 1.6 1.1 1.6 2.1v3.5'
-    'c0 .6-.4 1-1 1h-1.5a3.2 3.2 0 0 0-6.2 0h-8.6a3.2 3.2 0 0 0-6.2 0H9c-.6 0-1-.4-1-1z" fill="var(--c-sun)"/>'
-    '<circle cx="15" cy="26.6" r="2.3" fill="var(--c-sun)"/><circle cx="27.8" cy="26.6" r="2.3" fill="var(--c-sun)"/>'
-    '<path d="M18.2 16.8h3v3.4h-5.6zM22.6 16.8h2.6c.4 0 .7.2 1 .5l2.2 2.9h-5.8z" fill="var(--c-primary)"/>'
-    "</svg>"
-)
+def logo_svg(variante="padrao", cls="logo"):
+    """Logo oficial redesenhada em vetor: GAROPABA, carro de frente e selo “loca fácil · veículos”.
+    variante "clara" para fundos verdes (nome em branco, selo um tom acima)."""
+    nome = "#FFFFFF" if variante == "clara" else "var(--c-primary)"
+    selo = "#145238" if variante == "clara" else "var(--c-primary)"
+    return (
+        f'<svg class="{cls}" viewBox="0 0 240 172" role="img" aria-label="Garopaba Loca Fácil Veículos">'
+        f'<text x="120" y="22" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="22.5" letter-spacing="1.2" fill="{nome}">GAROPABA</text>'
+        '<path d="M86 62 94 44q2-5 8-5h36q6 0 8 5l8 18 6 1q6 1 6 8v21H74V71q0-7 6-8z" fill="var(--c-sun)"/>'
+        '<path d="M70 56h11l1 6H71zM170 56h-11l-1 6h11z" fill="var(--c-sun)"/>'
+        f'<path d="M101 45h38l7 15H94z" fill="{selo}"/>'
+        '<path d="M78 70l18 3-2 5-14-2zM162 70l-18 3 2 5 14-2z" fill="#fff"/>'
+        f'<rect x="106" y="72" width="28" height="4" rx="2" fill="{selo}"/><rect x="110" y="80" width="20" height="3" rx="1.5" fill="{selo}"/>'
+        f'<path d="M51 87h138l11 11v46l-80 25-80-25V98z" fill="{selo}"/>'
+        '<text x="120" y="131" text-anchor="middle" font-family="&#39;Baloo 2&#39;, sans-serif" font-weight="700" font-size="33" fill="var(--c-sun)">loca fácil</text>'
+        '<text x="120" y="152" text-anchor="middle" font-family="&#39;Baloo 2&#39;, sans-serif" font-weight="600" font-size="15" fill="#fff">veículos</text>'
+        '<rect x="62" y="145.5" width="26" height="2.2" rx="1.1" fill="#fff"/><rect x="152" y="145.5" width="26" height="2.2" rx="1.1" fill="#fff"/>'
+        "</svg>"
+    )
+
 
 
 # --------------------------------------------------------------------------- vehicle illustration
@@ -438,8 +449,7 @@ def header(active):
 <header class="site-header" data-header>
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label="{e(EMP['nome'])} – página inicial">
-      {BRAND_MARK}
-      <span class="brand__text"><span class="brand__place">Garopaba</span><span class="brand__name">Loca Fácil</span></span>
+      {logo_svg()}
     </a>
     <nav class="site-nav" id="site-nav" aria-label="Principal" data-nav>
       <ul>{links}</ul>
@@ -470,7 +480,7 @@ def footer():
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
-      <a class="brand brand--light" href="/" aria-label="{e(EMP['nome'])} – página inicial">{BRAND_MARK}<span class="brand__text"><span class="brand__place">Garopaba</span><span class="brand__name">Loca Fácil</span></span></a>
+      <a class="brand brand--light" href="/" aria-label="{e(EMP['nome'])} – página inicial">{logo_svg("clara")}</a>
       <p>Aluguel de carros em Garopaba/SC com veículos revisados, seguro total incluso e contrato transparente. Atendimento para pessoas e empresas, por diária ou mensal.</p>
     </div>
     <div>
@@ -551,7 +561,7 @@ def page(path, title, description, body, active=None, jsonld=None, page_class=""
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Montserrat:wght@700;800&family=Manrope:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/css/styles.css?v={ASSET_VERSION}">
 <script>document.documentElement.classList.add('js')</script>
 {ld}

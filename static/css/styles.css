@@ -30,7 +30,7 @@
   --c-success: #157347;
 
   /* Tipografia */
-  --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-display: "Montserrat", "Manrope", system-ui, sans-serif;
   --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --fs-xs: .8125rem;
   --fs-sm: .9375rem;
@@ -946,3 +946,43 @@ h2 { font-size: clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem); letter-spacing: -.02em; 
 .aviso a .icon { width: 1em; height: 1em; }
 
 .site-footer__links { white-space: nowrap; }
+
+/* ==========================================================================
+   Identidade da logo oficial (verde-floresta + amarelo-ouro, Montserrat e Baloo 2)
+   ========================================================================== */
+:root {
+  --c-primary: #0B3A27;       /* verde do selo da logo (contraste 12:1 em branco) */
+  --c-primary-700: #072A1C;
+  --c-primary-50: #E4EEE8;
+  --c-sun: #F2C21B;           /* amarelo do carro e do “loca fácil” */
+  --c-sun-700: #C99A00;
+  --c-sun-50: #FDF4D3;
+  --c-deep: #0B3A27;
+  --f-display: "Montserrat", "Manrope", system-ui, sans-serif;
+  --f-logo: "Baloo 2", "Manrope", system-ui, sans-serif;
+  --fs-h1: clamp(1.85rem, 1.2rem + 3vw, 3.5rem);
+}
+h1, h2 { font-family: var(--f-display); font-weight: 800; letter-spacing: -.025em; }
+h2 { font-size: clamp(1.6rem, 1.05rem + 2.4vw, 3.1rem); }
+.hero__title { font-size: clamp(1.85rem, .9rem + 5vw, 5.25rem); letter-spacing: -.035em; line-height: 1.02; }
+
+/* Logo no topo e no rodapé */
+.brand .logo { display: block; height: clamp(62px, 40px + 3vw, 78px); width: auto; }
+.site-header__inner { min-height: calc(clamp(62px, 40px + 3vw, 78px) + 14px); }
+:root { --header-h: 92px; }
+@media (max-width: 1040px) { :root { --header-h: 76px; } }
+.site-footer__brand .logo { height: 112px; width: auto; }
+
+/* Selo de preço com o formato do selo da logo (cantos cortados em cima, ponta embaixo) */
+.plate {
+  outline: 0; border-radius: 0; gap: 0; padding: 1rem 1.9rem 1.65rem;
+  clip-path: polygon(7% 0, 93% 0, 100% 12%, 100% 80%, 50% 100%, 0 80%, 0 12%);
+}
+.plate__big { font-family: var(--f-logo); font-weight: 700; font-size: clamp(2.1rem, 1.5rem + 1.5vw, 2.9rem); letter-spacing: 0; line-height: 1.05; }
+.plate__small { display: flex; align-items: center; gap: .45rem; }
+.plate__small:last-child::before, .plate__small:last-child::after { content: ""; width: 14px; height: 2px; border-radius: 1px; background: currentColor; }
+
+/* Nome no rodapé com a letra da logo */
+.site-footer { background: #072A1C; }
+.site-footer__wordmark { font-family: var(--f-logo); font-weight: 700; letter-spacing: -.01em; line-height: .9; }
+.cta-band { background: var(--c-primary); }

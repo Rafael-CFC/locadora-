@@ -1,12 +1,12 @@
 /* Painel da Loca Fácil — mesmas cores e fontes do site, pensado para o celular */
 :root {
-  --verde: #0E5A43; --verde-700: #0A4433; --verde-50: #E7F1EC;
-  --sol: #F4C430; --sol-50: #FDF5DA;
+  --verde: #0B3A27; --verde-700: #072A1C; --verde-50: #E4EEE8;
+  --sol: #F2C21B; --sol-50: #FDF4D3;
   --tinta: #0F1E2B; --tinta-2: #3A4955; --apagado: #5F6C77;
   --areia: #F7F3EC; --areia-2: #EFE8DC; --branco: #fff; --linha: #DCD2C1;
   --perigo: #B42318; --perigo-50: #FDECEA; --ok: #157347;
   --r: 14px; --r-g: 20px;
-  --f-titulo: "Fraunces", Georgia, serif;
+  --f-titulo: "Montserrat", "Manrope", system-ui, sans-serif;
   --f-texto: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -18,7 +18,7 @@ img { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button, a, label { touch-action: manipulation; }
 h1, h2, h3 { margin: 0; line-height: 1.15; }
-h1, h2 { font-family: var(--f-titulo); font-weight: 600; letter-spacing: -.015em; }
+h1, h2 { font-family: var(--f-titulo); font-weight: 800; letter-spacing: -.02em; }
 p { margin: 0; }
 :focus-visible { outline: 3px solid #D9A80F; outline-offset: 2px; border-radius: 8px; }
 .p-muted { color: var(--apagado); }
@@ -88,16 +88,16 @@ p { margin: 0; }
 
 /* Marca */
 .p-marca { display: inline-flex; align-items: center; gap: .65rem; }
-.p-marca svg { width: 44px; height: 44px; }
-.p-marca span { display: flex; flex-direction: column; font-family: var(--f-titulo); font-size: 1.3rem; font-weight: 600; line-height: 1; }
-.p-marca small { font-family: var(--f-texto); font-size: .75rem; font-weight: 700; color: var(--verde); margin-bottom: 3px; }
-.p-marca--pequena svg { width: 36px; height: 36px; }
-.p-marca--pequena span { font-size: 1.1rem; }
+.p-logo { display: block; height: 96px; width: auto; }
+.p-login .p-marca { justify-content: center; }
+.p-marca--pequena .p-logo { height: 54px; }
+.p-marca__painel { font-weight: 800; font-size: .8125rem; color: var(--verde); background: var(--sol-50); padding: .2rem .6rem; border-radius: 99px; }
 
 /* Login */
 .p-login { min-height: 100svh; display: grid; place-items: center; padding: 1.5rem 1rem; }
 .p-login__card { width: min(420px, 100%); display: grid; gap: 1.1rem; background: var(--branco); border-radius: 24px; padding: 2rem 1.5rem; }
-.p-login__card h1 { font-size: 1.9rem; margin-top: .5rem; }
+.p-login__card h1 { font-size: 1.6rem; margin-top: .25rem; text-align: center; }
+.p-login__card > .p-muted { text-align: center; }
 .p-erro { color: var(--perigo); font-weight: 600; font-size: .9375rem; background: var(--perigo-50); padding: .65rem .85rem; border-radius: 12px; }
 .p-aviso-config { font-size: .875rem; background: var(--sol-50); padding: .75rem .9rem; border-radius: 12px; }
 @media (prefers-reduced-motion: no-preference) { .p-login__card { animation: subir 420ms var(--ease) both; } }
