@@ -168,6 +168,7 @@ for _v in FLEET:  # dois carros com o mesmo nome ganham endereços diferentes
 FAQ = [{**q, "resposta": None if blank(q.get("resposta")) else q["resposta"]} for q in load("faq.json")["perguntas"]]
 REVIEWS_ALL = [{**r, "data": None if blank(r.get("data")) else r["data"]} for r in load("avaliacoes.json")["avaliacoes"]]
 AVISOS = [a for a in load_optional("avisos.json", "avisos") if a.get("ativo") and not blank(a.get("texto"))]
+PRAIAS = [p for p in load_optional("praias.json", "praias") if not blank(p.get("nome")) and not blank(p.get("texto"))]
 
 SITE_URL = (os.environ.get("SITE_URL") or EMP.get("site_url") or "http://localhost:8000").rstrip("/")
 GSC_TOKEN = os.environ.get("GOOGLE_SITE_VERIFICATION", "")
@@ -775,11 +776,86 @@ def page_hero(eyebrow, title, lead, crumbs=None):
 # --------------------------------------------------------------------------- pages
 
 def vehicle_options(selected=None, include_help=True):
-    opts = ['<option value="">Selecione um veículo</option>'] if not include_help else ['<option value="">Ainda não sei – quero orientação</option>']
+    opts = ['<option value="">Selecione um veículo</option>'] if not include_help else ['<option value="">Ainda não sei</option>']
     for v in FLEET:
         sel = " selected" if v["slug"] == selected else ""
         opts.append(f'<option value="{v["slug"]}"{sel}>{e(vehicle_name(v))} · {e(v["categoria"])}</option>')
     return "".join(opts)
+
+
+# Mapa ilustrativo do litoral (sem escala). viewBox 400 x 560: terra à esquerda, mar à direita.
+# As praias de content/praias.json são posicionadas em % sobre esta mesma área.
+COAST_PATH = (
+    "M0 0H246C250 30 254 60 254 70C258 100 268 120 268 140C268 170 250 190 236 200"
+    "C222 210 214 224 220 236C232 246 270 238 300 250C312 258 300 272 294 280"
+    "C286 300 280 320 282 330C286 345 276 352 270 360C262 380 270 395 262 410"
+    "C254 430 262 450 262 470C262 480 246 486 244 495C250 510 270 520 268 560H0Z"
+)
+
+
+def region_map():
+    pins = "".join(
+        f'<button type="button" class="map-pin" style="left:{p["x"]}%;top:{p["y"]}%" data-beach-pin="{e(p["slug"])}" '
+        f'aria-controls="praia-{e(p["slug"])}" aria-pressed="false"><span class="map-pin__dot"></span>'
+        f'<span class="map-pin__label">{e(p.get("curto") or p["nome"])}</span></button>'
+        for p in PRAIAS
+    )
+    return f"""<figure class="region-map">
+      <div class="region-map__canvas">
+      <svg viewBox="0 0 400 560" aria-hidden="true" focusable="false">
+        <rect width="400" height="560" class="region-map__sea"/>
+        <path d="{COAST_PATH}" class="region-map__land"/>
+        <path d="M216 228C240 200 262 170 262 140C258 110 252 80 250 50M236 236C262 250 280 262 286 280C276 310 272 340 264 360C252 390 230 405 214 415M214 415C236 440 250 470 242 495" class="region-map__coast-road"/>
+        <ellipse cx="192" cy="420" rx="42" ry="22" class="region-map__sea"/>
+        <path d="M232 418C246 414 254 412 262 410" class="region-map__channel"/>
+        <path d="M0 262C40 258 84 252 120 250C160 248 196 236 216 228" class="region-map__road"/>
+        <text x="16" y="248" class="region-map__small">BR-101</text>
+        <text x="40" y="150" class="region-map__town">Garopaba</text>
+        <text x="40" y="470" class="region-map__town">Imbituba</text>
+        <text x="380" y="300" class="region-map__ocean" transform="rotate(90 380 300)">Oceano Atlântico</text>
+      </svg>
+      <span class="map-store" style="left:30%;top:44.6%"><span class="map-store__mark"></span><span class="map-store__label">Nossa loja</span></span>
+      {pins}
+      </div>
+      <figcaption>Mapa ilustrativo, fora de escala. A loja fica na {e(EMP['endereco']['logradouro'].split(',')[0])}, em {e(EMP['endereco']['bairro'])}.</figcaption>
+    </figure>"""
+
+
+def region_section():
+    if not PRAIAS:
+        return ""
+    chips = "".join(
+        f'<li><button type="button" class="beach-chip" data-beach-pin="{e(p["slug"])}" aria-controls="praia-{e(p["slug"])}" aria-pressed="false">{e(p["nome"])}</button></li>'
+        for p in PRAIAS
+    )
+    panels = "".join(
+        f"""<article class="beach" id="praia-{e(p['slug'])}" data-beach="{e(p['slug'])}">
+          <h3>{e(p['nome'])}</h3>
+          <p class="beach__place">{e(p.get('lugar') or '')}</p>
+          <p>{e(p['texto'])}</p>
+          <a class="btn btn--primary" href="{wa_url(f"Olá! Vim pelo site e quero alugar um carro para curtir a {p['nome']}. Pode me passar disponibilidade e valores?")}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="praia_{e(p['slug'])}">{icon('whatsapp')}Pedir um carro para este passeio</a>
+        </article>"""
+        for p in PRAIAS
+    )
+    return f"""
+<section class="section region" id="praias" aria-labelledby="region-title">
+  <div class="container region__grid" data-beach-picker>
+    <div class="region__copy">
+      <h2 id="region-title">Praias a minutos de carro</h2>
+      <p class="region__lead">Garopaba é feita de praias em direções diferentes. Com um carro, você escolhe a do dia conforme o vento e o mar, sem horário de ônibus. Toque numa praia do mapa.</p>
+      <ul class="beach-chips" aria-label="Praias">{chips}</ul>
+      <div class="beaches" aria-live="polite">{panels}</div>
+    </div>
+    {region_map()}
+  </div>
+  <div class="container">
+    <dl class="arrivals">
+      <div><dt>Chegando de avião</dt><dd>O aeroporto de Florianópolis fica a cerca de 90 km. Combine com a equipe o horário de retirada para a sua chegada.</dd></div>
+      <div><dt>Chegando de ônibus</dt><dd>Desembarque em Garopaba e retire o carro na loja para circular pela região.</dd></div>
+      <div><dt>Mora ou trabalha aqui</dt><dd>Carro reserva para imprevistos, aluguel mensal e atendimento para empresas.</dd></div>
+    </dl>
+  </div>
+</section>"""
 
 
 def build_home():
@@ -793,16 +869,7 @@ def build_home():
     <h1 class="hero__title">Aluguel de carros em Garopaba</h1>
     <div class="hero__grid">
       <div class="hero__copy">
-        <p class="hero__lead">Veículos revisados, seguro total incluso e contrato transparente. Retire na nossa loja em {e(a['bairro'])} e aproveite o litoral por um dia ou por um mês.</p>
-        <div class="btn-row hero__ctas">
-          <a class="btn btn--primary btn--lg" href="/veiculos/" data-track="cta_click" data-track-label="hero_veiculos">Ver veículos{icon('arrow')}</a>
-          <a class="btn btn--ghost btn--lg" href="{wa_url('Olá! Vim pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="hero">{icon('whatsapp')}Falar no WhatsApp</a>
-        </div>
-        <ul class="trust" aria-label="Por que alugar com a gente">
-          <li>{icon('shield')}Seguro total incluso</li>
-          <li>{icon('check')}Veículos revisados e vistoriados</li>
-          <li>{icon('store')}Loja física em Garopaba</li>
-        </ul>
+        <p class="hero__lead">Diárias a partir de {brl(EMP['diaria_a_partir'])}, com seguro total incluso e carros revisados. Retire na nossa loja em {e(a['bairro'])} e aproveite o litoral por um dia ou por um mês.</p>
         <form class="quick-quote" action="/reserva/" method="get" data-quick-quote novalidate aria-labelledby="qq-title">
           <h2 id="qq-title" class="quick-quote__title">Consulte as suas datas</h2>
           <div class="field">
@@ -820,6 +887,10 @@ def build_home():
           <button class="btn btn--primary btn--lg field--wide" type="submit">Continuar{icon('arrow')}</button>
           <p class="field-error quick-quote__error" data-qq-error hidden></p>
         </form>
+        <p class="hero__links">
+          <a class="link-arrow" href="/veiculos/" data-track="cta_click" data-track-label="hero_veiculos">Ver os carros{icon('arrow')}</a>
+          <a class="link-arrow" href="{wa_url('Olá! Vim pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener" data-track="whatsapp_click" data-track-label="hero">{icon('whatsapp')}Falar no WhatsApp</a>
+        </p>
       </div>
       <div class="hero__visual">
         <figure class="hero__photo">
@@ -888,23 +959,7 @@ def build_home():
   </div>
 </section>
 
-<section class="section region" aria-labelledby="region-title">
-  <div class="container region__grid">
-    <div class="region__copy reveal">
-      <h2 id="region-title">Praias a minutos de carro</h2>
-      <p>Garopaba é feita de praias, trilhas e mirantes espalhados pelo litoral. Silveira, Ferrugem, Siriú e Gamboa ficam em direções diferentes, e a Praia do Rosa e a Lagoa de Ibiraquera estão logo ali, em Imbituba. Com um carro, você escolhe a praia conforme o vento e o mar do dia, sem depender de horário de ônibus.</p>
-      <p>Na temporada das baleias-francas, entre o inverno e a primavera, o carro também facilita chegar cedo aos pontos de observação.</p>
-      <dl class="arrivals">
-        <div><dt>Chegando de avião</dt><dd>O aeroporto de Florianópolis fica a cerca de 90 km. Combine com a equipe o horário de retirada para a sua chegada.</dd></div>
-        <div><dt>Chegando de ônibus</dt><dd>Desembarque em Garopaba e retire o carro na loja para circular pela região.</dd></div>
-        <div><dt>Mora ou trabalha aqui</dt><dd>Carro reserva para imprevistos, aluguel mensal e atendimento para empresas.</dd></div>
-      </dl>
-    </div>
-    <figure class="region__photo reveal">
-      <img src="/img/frota/kwid-laranja.webp" alt="Renault Kwid laranja estacionado entre palmeiras e um quiosque de palha" width="410" height="523" loading="lazy" decoding="async">
-    </figure>
-  </div>
-</section>
+{region_section()}
 
 <section class="section section--tint" aria-labelledby="faq-title">
   <div class="container faq-layout">

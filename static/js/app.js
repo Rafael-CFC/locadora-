@@ -620,6 +620,22 @@
     });
   }
 
+  /* ------------------------------------------------------------ praias (home) */
+  // Sem script, todas as praias aparecem em lista; com script, uma por vez, escolhida no mapa ou nos botões.
+  $$('[data-beach-picker]').forEach((box) => {
+    const panels = $$('[data-beach]', box);
+    const pins = $$('[data-beach-pin]', box);
+    if (!panels.length) return;
+    box.classList.add('is-interactive');
+    const select = (slug, user) => {
+      panels.forEach((p) => { p.hidden = p.dataset.beach !== slug; });
+      pins.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.beachPin === slug)));
+      if (user) track('beach_select', { label: slug });
+    };
+    pins.forEach((b) => b.addEventListener('click', () => select(b.dataset.beachPin, true)));
+    select((panels.find((p) => p.dataset.beach === 'centro') || panels[0]).dataset.beach, false);
+  });
+
   /* ------------------------------------------------------------ mapa sob demanda */
   $$('[data-map]').forEach((box) => {
     $('[data-map-load]', box)?.addEventListener('click', () => {
