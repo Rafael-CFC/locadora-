@@ -1,0 +1,68 @@
+{
+  "_comentario": "Praias do mapa da página inicial. 'curto' é o nome no mapa; x e y são a posição do ponto no mapa ilustrativo, em % (0 = esquerda/topo). Textos a confirmar com a equipe.",
+  "praias": [
+    {
+      "slug": "gamboa",
+      "nome": "Praia da Gamboa",
+      "curto": "Gamboa",
+      "lugar": "Garopaba, ao norte",
+      "texto": "A praia mais ao norte, depois do Siriú. Faixa de areia larga e pouco ocupada, para quem procura sossego e mar aberto.",
+      "x": 63.5,
+      "y": 9
+    },
+    {
+      "slug": "siriu",
+      "nome": "Praia do Siriú",
+      "curto": "Siriú",
+      "lugar": "Garopaba, ao norte",
+      "texto": "Dunas altas atrás da areia e uma praia longa para caminhar. Fica ao norte do centro, no caminho da Gamboa.",
+      "x": 67,
+      "y": 25
+    },
+    {
+      "slug": "centro",
+      "nome": "Praia Central",
+      "curto": "Central",
+      "lugar": "Centro de Garopaba",
+      "texto": "A enseada da cidade, com barcos de pesca, restaurantes e comércio por perto. Mar mais calmo e, no inverno, baleias-francas vistas do morro.",
+      "x": 54,
+      "y": 40.4
+    },
+    {
+      "slug": "silveira",
+      "nome": "Praia do Silveira",
+      "curto": "Silveira",
+      "lugar": "Garopaba, ao sul do centro",
+      "texto": "Do outro lado do morro. Ondas fortes, surfe o ano todo e trilhas com mirantes sobre o mar.",
+      "x": 73.5,
+      "y": 50
+    },
+    {
+      "slug": "ferrugem",
+      "nome": "Praia da Ferrugem",
+      "curto": "Ferrugem",
+      "lugar": "Garopaba, ao sul",
+      "texto": "A praia mais movimentada no verão, com bares, pousadas e boas ondas.",
+      "x": 67.5,
+      "y": 64.3
+    },
+    {
+      "slug": "ibiraquera",
+      "nome": "Lagoa de Ibiraquera",
+      "curto": "Ibiraquera",
+      "lugar": "Imbituba",
+      "texto": "Entre Garopaba e o Rosa. Água calma e vento constante: ponto de kitesurf, windsurf e stand-up paddle.",
+      "x": 48,
+      "y": 75
+    },
+    {
+      "slug": "rosa",
+      "nome": "Praia do Rosa",
+      "curto": "Rosa",
+      "lugar": "Imbituba",
+      "texto": "Uma enseada cercada de morros, com pousadas e trilhas. De julho a novembro, baleias-francas perto da areia.",
+      "x": 61,
+      "y": 88.4
+    }
+  ]
+}

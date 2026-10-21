@@ -38,6 +38,7 @@ content/
   faq.json             perguntas frequentes; resposta vazia = oculta em produção
   avaliacoes.json      avaliações; só publica verificadas + autorizadas
   avisos.json          faixa de avisos e promoções
+  praias.json          praias do mapa interativo da página inicial
 static/painel/         painel da locadora (login por e-mail e senha)
 static/admin/          editor avançado para o desenvolvedor (Sveltia CMS)
 painel-api/worker.js   serviço do painel (Cloudflare Worker)
@@ -60,6 +61,7 @@ O jeito normal é pelo painel `/painel/` (veja abaixo). Editando os arquivos à 
 - **Fotos reais**: salve em `static/img/frota/` em WebP e liste em `imagens` como `{"src": "img/frota/kwid-vermelho.webp", "alt": "…", "w": 400, "h": 492, "foco": "50% 72%"}`. `foco` indica onde o carro está na foto (usado no recorte dos cards). Com 2 ou mais fotos, a galeria ganha miniaturas.
 - **Novo veículo**: copie um bloco em `veiculos.json` e troque `slug`, dados e fotos. A página `/veiculos/<slug>/` é criada no próximo build.
 - **Políticas** (idade, caução, cancelamento etc.): preencha a resposta em `faq.json` e, se quiser, em `empresa.json > politicas`.
+- **Praias do mapa** (página inicial): `praias.json`. Cada praia tem `nome`, `curto` (rótulo no mapa), `lugar`, `texto` e a posição `x`/`y` em % sobre o mapa ilustrativo. Sem o arquivo, a seção não aparece. O painel `/painel/` ainda não edita este arquivo.
 - **Avaliações**: adicione em `avaliacoes.json` com `verificada: true` e `autorizada: true`. Nomes abreviados (ex.: “Thallis F.”) e sem data quando o Google só mostra “há X meses”. A nota média só aparece a partir de 3 avaliações publicadas (`MIN_REVIEWS_FOR_AVERAGE` em `build.py`).
 
 ## Como funciona a solicitação de reserva
